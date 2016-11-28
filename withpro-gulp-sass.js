@@ -14,7 +14,6 @@ let pleeease        = require('gulp-pleeease');
 let cached          = require('gulp-cached');
 let sourcemaps      = require('gulp-sourcemaps');
 let colors          = require('colors');
-let sizeOf   = require('image-size');
 let isWatching      = false;
 
 // /////////////////////////////////////////////////////////////////////////////
