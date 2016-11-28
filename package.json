@@ -1,9 +1,13 @@
 {
-  "name": "gulp-sass-compile",
+  "name": "withpro-gulp-sass",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "gulp sass develop env.",
+  "main": "withpro-gulp-sass.js",
   "private": true,
+  "engines": {
+      "node": "^6.9.1",
+      "npm": "^4.0.1"
+  },
   "dependencies": {},
   "devDependencies": {
     "colors": "^1.1.2",
@@ -22,8 +26,14 @@
     "sass-graph": "^2.1.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "gulp sass-watch",
+    "build": "gulp sass-build"
+  },
+  "repository" : {
+      "type": "git",
+      "url": "git@github.com:WITHPROJECTS/withpro-gulp-sass.git"
   },
   "author": "WITHPROJECTS inc.",
+  "homepage": "http://www.withprojects.co.jp/",
   "license": "MIT"
 }
