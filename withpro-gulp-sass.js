@@ -103,7 +103,7 @@ let optionInit = ()=>{
         console.error(err.message.red.bold);
         console.log(`---------------------------------------------`.red.bold);
         delete cached.caches['sass'];
-        gulp.emit('emit');
+        gulp.emit('end');
     };
 }
 
