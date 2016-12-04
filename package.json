@@ -8,8 +8,7 @@
       "node": "^6.9.1",
       "npm": "^4.0.1"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "colors": "^1.1.2",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.1",
@@ -25,6 +24,7 @@
     "node-notifier": "^4.6.1",
     "sass-graph": "^2.1.2"
   },
+  "devDependencies": {},
   "scripts": {
     "watch": "gulp sass-watch",
     "build": "gulp sass-build"

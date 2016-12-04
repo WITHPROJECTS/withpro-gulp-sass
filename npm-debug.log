@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/kenji/.nvm/versions/node/v6.9.1/bin/node',
+1 verbose cli   '/Users/kenji/.nvm/versions/node/v6.9.1/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@4.0.1
+3 info using node@v6.9.1
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/kenji/project/withpro-source-maker/withpro-gulp-sass',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/kenji/.npm/withpro-gulp-sass/0.0.1/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/kenji/.npm correctMkdir not in flight; initializing
+10 info lifecycle withpro-gulp-sass@0.0.1~prepublish: withpro-gulp-sass@0.0.1
+11 silly lifecycle withpro-gulp-sass@0.0.1~prepublish: no script for prepublish, continuing
+12 info lifecycle withpro-gulp-sass@0.0.1~prepare: withpro-gulp-sass@0.0.1
+13 silly lifecycle withpro-gulp-sass@0.0.1~prepare: no script for prepare, continuing
+14 verbose tar pack [ '/Users/kenji/.npm/withpro-gulp-sass/0.0.1/package.tgz',
+14 verbose tar pack   '/Users/kenji/project/withpro-source-maker/withpro-gulp-sass' ]
+15 verbose tarball /Users/kenji/.npm/withpro-gulp-sass/0.0.1/package.tgz
+16 verbose folder /Users/kenji/project/withpro-source-maker/withpro-gulp-sass
+17 verbose addLocalTarball adding from inside cache /Users/kenji/.npm/withpro-gulp-sass/0.0.1/package.tgz
+18 verbose correctMkdir /Users/kenji/.npm correctMkdir not in flight; initializing
+19 silly cache afterAdd withpro-gulp-sass@0.0.1
+20 verbose afterAdd /Users/kenji/.npm/withpro-gulp-sass/0.0.1/package/package.json not in flight; writing
+21 verbose correctMkdir /Users/kenji/.npm correctMkdir not in flight; initializing
+22 verbose afterAdd /Users/kenji/.npm/withpro-gulp-sass/0.0.1/package/package.json written
+23 silly publish { name: 'withpro-gulp-sass',
+23 silly publish   version: '0.0.1',
+23 silly publish   description: 'gulp sass develop env.',
+23 silly publish   main: 'withpro-gulp-sass.js',
+23 silly publish   private: true,
+23 silly publish   engines: { node: '^6.9.1', npm: '^4.0.1' },
+23 silly publish   dependencies: {},
+23 silly publish   devDependencies:
+23 silly publish    { colors: '^1.1.2',
+23 silly publish      gulp: '^3.9.1',
+23 silly publish      'gulp-cached': '^1.1.1',
+23 silly publish      'gulp-foreach': '^0.1.0',
+23 silly publish      'gulp-if': '^2.0.2',
+23 silly publish      'gulp-pleeease': '^2.0.2',
+23 silly publish      'gulp-plumber': '^1.1.0',
+23 silly publish      'gulp-sass': '^2.3.2',
+23 silly publish      'gulp-sass-image': '^1.0.2',
+23 silly publish      'gulp-sourcemaps': '^1.9.1',
+23 silly publish      'gulp-watch': '^4.3.11',
+23 silly publish      'image-size': '^0.5.0',
+23 silly publish      'node-notifier': '^4.6.1',
+23 silly publish      'sass-graph': '^2.1.2' },
+23 silly publish   scripts: { watch: 'gulp sass-watch', build: 'gulp sass-build' },
+23 silly publish   repository:
+23 silly publish    { type: 'git',
+23 silly publish      url: 'git+ssh://git@github.com/WITHPROJECTS/withpro-gulp-sass.git' },
+23 silly publish   author: { name: 'WITHPROJECTS inc.' },
+23 silly publish   homepage: 'http://www.withprojects.co.jp/',
+23 silly publish   license: 'MIT',
+23 silly publish   readme: 'Sassの開発環境です。\n\n## 使い方\n\n```bash\n$ npm run watch # watching sass file.\n$ npm run build # building sass file.\n```\n\n## 設定変更\n\n単体で利用する場合、「withpro-gulp-sass.js」を変更してください。\n\n```js\nconf : {\n    \'path\' : {\n        \'project\' : \'/\', // project root from web root.\n        \'src\' : {\n            \'sass\' : \'src/sass\',   // Sass files dir.\n            \'font\' : \'src/font\',   // font files dir.\n            \'lib\'  : [\'src/sass\'], // Sass lib. dir.\n        },\n        \'dest\' : {\n            \'css\'   : \'build/css\', // css files dir.\n            \'image\' : \'build/img\', // image files dir.\n            \'font\'  : \'build/font\' // font files dir. (outputed)\n        }\n    },\n    \'browsers\' : [\'last 3 version\'] // gulp-pleeeease support level.\n}\n```\n\nlocal moduleとして利用する場合は\n\n```js\nlet gulp = require(\'gulp\');\nlet wgs  = require(\'withpro-gulp-sass\');\n\n// -----------------------------------------------------------------------------\n// 設定変更\n// wgs.path.src.sass = \'assets/sass\';\n// wgs.path.src.font = \'assets/font\';\n// -----------------------------------------------------------------------------\n\nlet keys = Object.keys(withproGulpSass.functions);\nkeys.forEach((key)=>{\n    let f = withproGulpSass.functions;\n    if(Array.isArray(f[key])){\n        if(typeof f[key] === \'function\'){\n            gulp.task(key, f[key][0]);\n        }else{\n            gulp.task(key, f[key][0], f[key][1]);\n        }\n    }else{\n        gulp.task(key, f[key]);\n    }\n});\n```',
+23 silly publish   readmeFilename: 'README.ja.md',
+23 silly publish   gitHead: '32d372ba763d40fff80109ad47bef8fb7d78e7de',
+23 silly publish   bugs: { url: 'https://github.com/WITHPROJECTS/withpro-gulp-sass/issues' },
+23 silly publish   _id: 'withpro-gulp-sass@0.0.1',
+23 silly publish   _shasum: '65b9b26c6619c75f4b83b5164ce5a78213141c79',
+23 silly publish   _from: '.' }
+24 info lifecycle withpro-gulp-sass@0.0.1~prepublishOnly: withpro-gulp-sass@0.0.1
+25 silly lifecycle withpro-gulp-sass@0.0.1~prepublishOnly: no script for prepublishOnly, continuing
+26 verbose getPublishConfig undefined
+27 verbose stack Error: This package has been marked as private
+27 verbose stack Remove the 'private' field from the package.json to publish it.
+27 verbose stack     at publish_ (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/lib/publish.js:103:15)
+27 verbose stack     at Array.<anonymous> (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+27 verbose stack     at LOOP (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/chain.js:15:14)
+27 verbose stack     at LOOP (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/chain.js:14:28)
+27 verbose stack     at /Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/chain.js:18:7
+27 verbose stack     at done (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/lib/utils/lifecycle.js:132:5)
+27 verbose stack     at LOOP (/Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/chain.js:7:26)
+27 verbose stack     at /Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/slide/lib/chain.js:18:7
+27 verbose stack     at /Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/lib/utils/lifecycle.js:318:20
+27 verbose stack     at /Users/kenji/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:264:29
+28 verbose cwd /Users/kenji/project/withpro-source-maker/withpro-gulp-sass
+29 error Darwin 16.1.0
+30 error argv "/Users/kenji/.nvm/versions/node/v6.9.1/bin/node" "/Users/kenji/.nvm/versions/node/v6.9.1/bin/npm" "publish"
+31 error node v6.9.1
+32 error npm  v4.0.1
+33 error This package has been marked as private
+33 error Remove the 'private' field from the package.json to publish it.
+34 error If you need help, you may report this error at:
+34 error     <https://github.com/npm/npm/issues>
+35 verbose exit [ 1, true ]
