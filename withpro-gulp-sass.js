@@ -78,9 +78,9 @@ let optionInit = ()=>{
     // -------------------------------------------------------------------------
     ops['pleeease'] = ops['pleeease'] || {};
     let pleeeaseOps = ops['pleeease'];
-    pleeeaseOps['minifier'] = pleeeaseOps['minifier'] || false;
-    pleeeaseOps['rem']      = pleeeaseOps['rem']      || true;
-    pleeeaseOps['opacity']  = pleeeaseOps['opacity']  || true;
+    pleeeaseOps['minifier'] = pleeeaseOps['minifier'] !== undefined ? pleeeaseOps['minifier'] : false;
+    pleeeaseOps['rem']      = pleeeaseOps['rem']      !== undefined ? pleeeaseOps['rem']      : true;
+    pleeeaseOps['opacity']  = pleeeaseOps['opacity']  !== undefined ? pleeeaseOps['opacity']  : true;
     pleeeaseOps['autoprefixer'] = pleeeaseOps['autoprefixer'] || {};
 
     let autoprefixer = pleeeaseOps['autoprefixer'];
