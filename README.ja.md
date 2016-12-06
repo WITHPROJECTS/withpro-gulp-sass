@@ -3,8 +3,8 @@ Sassの開発環境です。
 ## 使い方
 
 ```bash
-$ npm run watch # watching sass file.
-$ npm run build # building sass file.
+$ npm run sass-watch # watching sass file.
+$ npm run sass-build # building sass file.
 ```
 
 ## 設定変更

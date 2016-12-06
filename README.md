@@ -3,8 +3,8 @@ Sass develop env.
 ## Usage
 
 ```bash
-$ npm run watch # watching sass file.
-$ npm run build # building sass file.
+$ npm run sass-watch # watching sass file.
+$ npm run sass-build # building sass file.
 ```
 
 ## change configuration
