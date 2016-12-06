@@ -33,8 +33,8 @@ conf : {
 Not so, when you wanna use it as local module.
 
 ```js
-let gulp = require('gulp');
-let wgs  = require('withpro-gulp-sass');
+let gulp   = require('gulp');
+let wgsass = require('withpro-gulp-sass');
 
 // -----------------------------------------------------------------------------
 // change configuration.
@@ -42,7 +42,7 @@ let wgs  = require('withpro-gulp-sass');
 // wgs.path.src.font = 'assets/font';
 // -----------------------------------------------------------------------------
 
-let keys = Object.keys(withproGulpSass.functions);
+let keys = Object.keys(wgsass.functions);
 keys.forEach((key)=>{
     let f = withproGulpSass.functions;
     if(Array.isArray(f[key])){
