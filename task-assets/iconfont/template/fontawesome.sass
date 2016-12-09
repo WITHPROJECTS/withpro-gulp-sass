@@ -1,0 +1,22 @@
+@font-face
+    font-family : '{{ fontName }}'
+    src         : {{ sassFontPathBuilderSingle('../../build/font/', 'woff') }}
+    src         : {{ sassFontPathBuilder('../../build/font/') }}
+    font-weight : normal
+    font-style  : normal
+
+@mixin {{ fontName + '-base-style' }}
+    &:before
+        font-family             : '{{ fontName }}'
+        -webkit-font-smoothing  : antialiased
+        -moz-osx-font-smoothing : grayscale
+        speak                   : none
+        font-weight             : normal
+        font-style              : normal
+
+@mixin {{ 'add-' + fontName }}
+    &:before
+        content : $cnt
+
+{% for glyph in glyphs %}${{ fontName + '--' + glyph.name }} : '\{{ glyph.codepoint }}'
+{% endfor %}

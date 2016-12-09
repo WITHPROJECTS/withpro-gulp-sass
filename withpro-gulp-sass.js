@@ -8,7 +8,7 @@ let sassTypes       = require('node-sass').types;
 let grapher         = require('sass-graph');
 let graph           = null;
 let forEach         = require('gulp-foreach');
-let sassImageHelper = require('./sass-functions/image-helper');
+let sassImageHelper = require('./task-assets/sass/functions/image-helper');
 let notifier        = require('node-notifier');
 let plumber         = require('gulp-plumber');
 let pleeease        = require('gulp-pleeease');
@@ -16,11 +16,18 @@ let cached          = require('gulp-cached');
 let sourcemaps      = require('gulp-sourcemaps');
 let colors          = require('colors');
 let iconfont        = require('gulp-iconfont');
+let consolidate     = require('gulp-consolidate');
+let rename          = require('gulp-rename');
 let isWatching      = false;
+
+//
+// The following contents is default config that path settings, setting tasks, and task options.
+// If you wanna change it. You shold override it using gulpfile.js.
+// 
 
 // /////////////////////////////////////////////////////////////////////////////
 //
-// 設定
+// SETTING
 //
 // /////////////////////////////////////////////////////////////////////////////
 let conf = {
@@ -46,7 +53,7 @@ let conf = {
 
 // /////////////////////////////////////////////////////////////////////////////
 //
-// オプション
+// OPTION
 //
 // /////////////////////////////////////////////////////////////////////////////
 conf.options = { first : true }
@@ -113,18 +120,12 @@ let optionInit = ()=>{
     // -------------------------------------------------------------------------
     // iconfont
     // -------------------------------------------------------------------------
-    // ops['iconfontCss'] = ops['iconfontCss'] || {};
-    // let iconCssOps = ops['iconfontCss'];
-    // iconCssOps['fontName']   = iconCssOps['fontName']   || 'icon';
-    // iconCssOps['path']       = iconCssOps['path']       || 'iconfont-template/_icons.scss';
-    // iconCssOps['targetPath'] = iconCssOps['targetPath'] || '../../../'+conf.path.src['sass-mixin'];
-    // iconCssOps['fontPath']   = iconCssOps['fontPath']   || '../font';
-    
     ops['iconfont'] = ops['iconfont'] || {};
     _ops = ops['iconfont'];
-    _ops['fontName']           = _ops['fontName'] || 'icon';
-    _ops['formats']            = _ops['formats']  || ['ttf', 'eot', 'woff'];
-    _ops['descent']            = _ops['descent']  || 0;
+    _ops['fontName']           = _ops['fontName']   || 'icon';
+    _ops['formats']            = _ops['formats']    || ['ttf', 'eot', 'woff'];
+    _ops['descent']            = _ops['descent']    || 0;
+    _ops['ext2format']         = _ops['ext2format'] || { 'woff':'woff', 'ttf':'truetype', 'svg':'svg' }, // withpro-gulp-sass original
     _ops['prependUnicode']     = _ops['prependUnicode']     !== undefined ? _ops['prependUnicode']     : true;
     _ops['autohint']           = _ops['autohint']           !== undefined ? _ops['autohint']           : false;
     _ops['fixedWidth']         = _ops['fixedWidth']         !== undefined ? _ops['fixedWidth']         : false;
@@ -132,9 +133,14 @@ let optionInit = ()=>{
     _ops['normalize']          = _ops['normalize']          !== undefined ? _ops['normalize']          : true;
 }
 
+// /////////////////////////////////////////////////////////////////////////////
+// 
+// TASK
+// 
+// /////////////////////////////////////////////////////////////////////////////
 conf.functions = {
     // =========================================================================
-    // ビルドタスク
+    // sass build
     // =========================================================================
     'sass-build' : function(){
         if(conf.options.first) optionInit();
@@ -165,7 +171,7 @@ conf.functions = {
             .pipe(gulp.dest(dest));
     },
     // =========================================================================
-    // 監視タスク
+    // sass file watching
     // =========================================================================
     'sass-watch' : function(){
         if(conf.options.first) optionInit();
@@ -174,54 +180,45 @@ conf.functions = {
         gulp.watch(target, ['sass-build']);
     },
     // =========================================================================
-    // アイコンフォント
+    // generate iconfonts
     // =========================================================================
     'iconfont' : function(){
         if(conf.options.first) optionInit();
         let src  = path.join(conf.path.src.iconfont, '*.svg');
-        let dest = conf.path.dest.iconfont;
-        // console.log(dest);
-        // conf.options.iconfontCss;
+        let dest  = conf.path.dest.iconfont;
         return gulp.src(src)
             .pipe(iconfont(conf.options.iconfont))
-            // .pipe(iconfont())
-            .pipe(gulp.dest(dest))
-        
-        // let done = function(){
-        //     console.log('done');
-        // }
-        
-        // async.parallel(
-        //     [
-        //         function handleGlyphs (cb){
-        //             console.log('glyphs');
-        //             
-        //             //   iconStream.on('glyphs', function(glyphs, options) {
-        //             //     gulp.src('templates/myfont.css')
-        //             //       .pipe(consolidate('lodash', {
-        //             //         glyphs: glyphs,
-        //             //         fontName: 'myfont',
-        //             //         fontPath: '../fonts/',
-        //             //         className: 's'
-        //             //       }))
-        //             //       .pipe(gulp.dest('www/css/'))
-        //             //       .on('finish', cb);
-        //             //   });
-        //         },
-        //         function handleFonts(cb){
-        //             //   iconStream
-        //             //     .pipe(gulp.dest('www/fonts/'))
-        //             //     .on('finish', cb);
-        //         }
-        //     ],
-        //     done
-        // );
-        // console.log(async);
-        // return gulp.src(src)
-        //     .pipe(iconfont(ops))
-        //     .on('glyphs', function(glyphs, options){
-        //         console.log(glyphs);
-        //     });
+            .on('glyphs', function(glyphs, options){
+                let name  = conf.options.iconfont.fontName;
+                let dest  = path.join(conf.path.dest.iconfont, 'sample');
+                let param = {
+                    'fontName'  : name,
+                    'className' : 'iconfont',
+                    'glyphs'    : glyphs.map(function(glyph){
+                        return {
+                            'name'      : glyph.name,
+                            'codepoint' : glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase()
+                        }
+                    })
+                };
+                // CSS
+                gulp.src('./task-assets/iconfont/template/fontawesome.css')
+                   .pipe(consolidate('swig', param))
+                   .pipe(rename({ basename : name }))
+                   .pipe(gulp.dest(dest))
+                // Sass
+                gulp.src('./task-assets/iconfont/template/fontawesome.sass')
+                   .pipe(consolidate('swig', param))
+                   .pipe(rename({ basename : name }))
+                   .pipe(gulp.dest(dest))
+                // HTML
+                gulp.src('./task-assets/iconfont/template/fontawesome.html')
+                   .pipe(consolidate('swig', param))
+                   .pipe(rename({ basename : name }))
+                   .pipe(gulp.dest(dest))
+                return this
+            })
+            .pipe(gulp.dest(dest));
     }
 }
 
