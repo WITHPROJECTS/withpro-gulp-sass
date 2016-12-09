@@ -1,3 +1,4 @@
+let async           = require('async');
 let path            = require('path');
 let gulp            = require('gulp');
 let watch           = require('gulp-watch');
@@ -14,6 +15,7 @@ let pleeease        = require('gulp-pleeease');
 let cached          = require('gulp-cached');
 let sourcemaps      = require('gulp-sourcemaps');
 let colors          = require('colors');
+let iconfont        = require('gulp-iconfont');
 let isWatching      = false;
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -25,14 +27,17 @@ let conf = {
     'path' : {
         'project' : '/',
         'src' : {
-            'sass' : 'src/sass',
-            'font' : 'src/font',
-            'lib'  : ['src/sass'],
+            'sass'       : 'src/sass',
+            'sass-mixin' : 'src/sass/mixin',
+            'font'       : 'src/font',
+            'iconfont'   : 'src/font/icon',
+            'lib'        : ['src/sass'],
         },
         'dest' : {
-            'css'   : 'build/css',
-            'image' : 'build/img',
-            'font'  : 'build/font'
+            'css'      : 'build/css',
+            'image'    : 'build/img',
+            'font'     : 'build/font',
+            'iconfont' : 'build/font/icon'
         }
     },
     'browsers' : ['last 3 version']
@@ -50,6 +55,7 @@ conf.options = { first : true }
 // =============================================================================
 let optionInit = ()=>{
     let ops   = conf.options;
+    let _ops  = null;
     ops.first = false;
     graph     = grapher.parseDir(conf.path.src.sass, {
         extensions : ['sass', 'scss']
@@ -58,10 +64,10 @@ let optionInit = ()=>{
     // sass
     // -------------------------------------------------------------------------
     ops['sass'] = ops['sass'] || {};
-    let sassOps = ops['sass'];
-    sassOps['outputStyle']    = sassOps['outputStyle']  || 'compressed';
-    sassOps['includePaths']   = sassOps['includePaths'] || conf.path.src.lib;
-    sassOps['functions']      = sassOps['functions']    || sassImageHelper({
+    _ops = ops['sass'];
+    _ops['outputStyle']  = _ops['outputStyle']  || 'compressed';
+    _ops['includePaths'] = _ops['includePaths'] || conf.path.src.lib;
+    _ops['functions']    = _ops['functions']    || sassImageHelper({
         'rtvPath' : {
             'css'   : conf.path.dest.css,
             'sass'  : conf.path.src.sass,
@@ -77,21 +83,21 @@ let optionInit = ()=>{
     // pleeease
     // -------------------------------------------------------------------------
     ops['pleeease'] = ops['pleeease'] || {};
-    let pleeeaseOps = ops['pleeease'];
-    pleeeaseOps['minifier'] = pleeeaseOps['minifier'] !== undefined ? pleeeaseOps['minifier'] : false;
-    pleeeaseOps['rem']      = pleeeaseOps['rem']      !== undefined ? pleeeaseOps['rem']      : true;
-    pleeeaseOps['opacity']  = pleeeaseOps['opacity']  !== undefined ? pleeeaseOps['opacity']  : true;
-    pleeeaseOps['autoprefixer'] = pleeeaseOps['autoprefixer'] || {};
+    _ops = ops['pleeease'];
+    _ops['minifier'] = _ops['minifier'] !== undefined ? _ops['minifier'] : false;
+    _ops['rem']      = _ops['rem']      !== undefined ? _ops['rem']      : true;
+    _ops['opacity']  = _ops['opacity']  !== undefined ? _ops['opacity']  : true;
+    _ops['autoprefixer'] = _ops['autoprefixer'] || {};
 
-    let autoprefixer = pleeeaseOps['autoprefixer'];
+    let autoprefixer = _ops['autoprefixer'];
     autoprefixer['browsers'] = autoprefixer['browsers'] || conf.browsers;
     autoprefixer['cascade']  = autoprefixer['cascade']  || conf.browsers;
     // -------------------------------------------------------------------------
     // plumber
     // -------------------------------------------------------------------------
     ops['plumber'] = ops['plumber'] || {};
-    let plumberOps = ops['plumber'];
-    plumberOps['errorHandler'] = plumberOps['errorHandler'] || function(err){
+    _ops = ops['plumber'];
+    _ops['errorHandler'] = _ops['errorHandler'] || function(err){
         notifier.notify({
             'title'   : `Sass ${err.name}`,
             'message' : `${err.name} : ${err.relativePath}\n{ Line : ${err.line}, Column : ${err.column} }`,
@@ -104,9 +110,31 @@ let optionInit = ()=>{
         delete cached.caches['sass'];
         gulp.emit('end');
     };
+    // -------------------------------------------------------------------------
+    // iconfont
+    // -------------------------------------------------------------------------
+    // ops['iconfontCss'] = ops['iconfontCss'] || {};
+    // let iconCssOps = ops['iconfontCss'];
+    // iconCssOps['fontName']   = iconCssOps['fontName']   || 'icon';
+    // iconCssOps['path']       = iconCssOps['path']       || 'iconfont-template/_icons.scss';
+    // iconCssOps['targetPath'] = iconCssOps['targetPath'] || '../../../'+conf.path.src['sass-mixin'];
+    // iconCssOps['fontPath']   = iconCssOps['fontPath']   || '../font';
+    
+    ops['iconfont'] = ops['iconfont'] || {};
+    _ops = ops['iconfont'];
+    _ops['fontName']           = _ops['fontName'] || 'icon';
+    _ops['formats']            = _ops['formats']  || ['ttf', 'eot', 'woff'];
+    _ops['descent']            = _ops['descent']  || 0;
+    _ops['prependUnicode']     = _ops['prependUnicode']     !== undefined ? _ops['prependUnicode']     : true;
+    _ops['autohint']           = _ops['autohint']           !== undefined ? _ops['autohint']           : false;
+    _ops['fixedWidth']         = _ops['fixedWidth']         !== undefined ? _ops['fixedWidth']         : false;
+    _ops['centerHorizontally'] = _ops['centerHorizontally'] !== undefined ? _ops['centerHorizontally'] : false;
+    _ops['normalize']          = _ops['normalize']          !== undefined ? _ops['normalize']          : true;
 }
 
 conf.functions = {
+    // =========================================================================
+    // ビルドタスク
     // =========================================================================
     'sass-build' : function(){
         if(conf.options.first) optionInit();
@@ -137,11 +165,63 @@ conf.functions = {
             .pipe(gulp.dest(dest));
     },
     // =========================================================================
+    // 監視タスク
+    // =========================================================================
     'sass-watch' : function(){
         if(conf.options.first) optionInit();
         isWatching = true;
         let target = path.join(conf.path.src.sass, '**/*.s[ac]ss');
         gulp.watch(target, ['sass-build']);
+    },
+    // =========================================================================
+    // アイコンフォント
+    // =========================================================================
+    'iconfont' : function(){
+        if(conf.options.first) optionInit();
+        let src  = path.join(conf.path.src.iconfont, '*.svg');
+        let dest = conf.path.dest.iconfont;
+        // console.log(dest);
+        // conf.options.iconfontCss;
+        return gulp.src(src)
+            .pipe(iconfont(conf.options.iconfont))
+            // .pipe(iconfont())
+            .pipe(gulp.dest(dest))
+        
+        // let done = function(){
+        //     console.log('done');
+        // }
+        
+        // async.parallel(
+        //     [
+        //         function handleGlyphs (cb){
+        //             console.log('glyphs');
+        //             
+        //             //   iconStream.on('glyphs', function(glyphs, options) {
+        //             //     gulp.src('templates/myfont.css')
+        //             //       .pipe(consolidate('lodash', {
+        //             //         glyphs: glyphs,
+        //             //         fontName: 'myfont',
+        //             //         fontPath: '../fonts/',
+        //             //         className: 's'
+        //             //       }))
+        //             //       .pipe(gulp.dest('www/css/'))
+        //             //       .on('finish', cb);
+        //             //   });
+        //         },
+        //         function handleFonts(cb){
+        //             //   iconStream
+        //             //     .pipe(gulp.dest('www/fonts/'))
+        //             //     .on('finish', cb);
+        //         }
+        //     ],
+        //     done
+        // );
+        // console.log(async);
+        // return gulp.src(src)
+        //     .pipe(iconfont(ops))
+        //     .on('glyphs', function(glyphs, options){
+        //         console.log(glyphs);
+        //     });
     }
 }
 
