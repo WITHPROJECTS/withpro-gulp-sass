@@ -1,9 +1,10 @@
-@font-face
-    font-family : '{{ fontName }}'
-    src         : {{ sassFontPathBuilderSingle('../../build/font/', 'woff') }}
-    src         : {{ sassFontPathBuilder('../../build/font/') }}
-    font-weight : normal
-    font-style  : normal
+@mixin {{ 'add-font-face--' + fontName }}($path)
+    @font-face
+        font-family : '{{ fontName }}'
+        src         : {{ sassFontPath(fontName, ['woff']) }}
+        src         : {{ sassFontPath(fontName) }}
+        font-weight : normal
+        font-style  : normal
 
 @mixin {{ fontName + '-base-style' }}
     &:before
@@ -14,7 +15,7 @@
         font-weight             : normal
         font-style              : normal
 
-@mixin {{ 'add-' + fontName }}
+@mixin {{ 'add-' + fontName }}($cnt)
     &:before
         content : $cnt
 

@@ -1,6 +1,6 @@
 @font-face {
     font-family : '{{ fontName }}';
-    src         : {{ sassFontPathBuilder('./') }};
+    src         : {{ sassFontPath(fontName, false, true) }};
     font-weight : normal;
     font-style  : normal;
 }

@@ -1,6 +1,6 @@
 {
   "name": "withpro-gulp-sass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "gulp sass develop env.",
   "main": "withpro-gulp-sass.js",
   "private": true,
@@ -30,8 +30,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "watch": "gulp sass-watch",
-    "build": "gulp sass-build",
+    "sass-watch": "gulp sass-watch",
+    "sass-build": "gulp sass-build",
     "iconfont": "gulp iconfont"
   },
   "repository": {

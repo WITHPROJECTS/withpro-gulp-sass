@@ -5,6 +5,7 @@ Sass develop env.
 ```bash
 $ npm run sass-watch # watching sass file.
 $ npm run sass-build # building sass file.
+$ npm run iconfont   # generate icon font.
 ```
 
 ## change configuration
@@ -16,14 +17,17 @@ conf : {
     'path' : {
         'project' : '/', // project root from web root.
         'src' : {
-            'sass' : 'src/sass',   // Sass files dir.
-            'font' : 'src/font',   // font files dir.
-            'lib'  : ['src/sass'], // Sass lib. dir.
+            'sass'      : 'src/sass',
+            'sassMixin' : 'src/sass/mixin',
+            'font'      : 'src/font',
+            'iconfont'  : 'src/font/icon',
+            'lib'       : ['src/sass']
         },
         'dest' : {
-            'css'   : 'build/css', // css files dir.
-            'image' : 'build/img', // image files dir.
-            'font'  : 'build/font' // font files dir. (outputed)
+            'css'      : 'build/css',
+            'image'    : 'build/img',
+            'font'     : 'build/font',
+            'iconfont' : 'build/font/icon'
         }
     },
     'browsers' : ['last 3 version'] // gulp-pleeeease support level.

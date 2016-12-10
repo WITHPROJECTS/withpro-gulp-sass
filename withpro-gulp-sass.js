@@ -34,11 +34,11 @@ let conf = {
     'path' : {
         'project' : '/',
         'src' : {
-            'sass'       : 'src/sass',
-            'sass-mixin' : 'src/sass/mixin',
-            'font'       : 'src/font',
-            'iconfont'   : 'src/font/icon',
-            'lib'        : ['src/sass'],
+            'sass'      : 'src/sass',
+            'sassMixin' : 'src/sass/mixin',
+            'font'      : 'src/font',
+            'iconfont'  : 'src/font/icon',
+            'lib'       : ['src/sass'],
         },
         'dest' : {
             'css'      : 'build/css',
@@ -49,7 +49,6 @@ let conf = {
     },
     'browsers' : ['last 3 version']
 }
-
 
 // /////////////////////////////////////////////////////////////////////////////
 //
@@ -122,16 +121,43 @@ let optionInit = ()=>{
     // -------------------------------------------------------------------------
     ops['iconfont'] = ops['iconfont'] || {};
     _ops = ops['iconfont'];
-    _ops['fontName']           = _ops['fontName']   || 'icon';
-    _ops['formats']            = _ops['formats']    || ['ttf', 'eot', 'woff'];
-    _ops['descent']            = _ops['descent']    || 0;
-    _ops['ext2format']         = _ops['ext2format'] || { 'woff':'woff', 'ttf':'truetype', 'svg':'svg' }, // withpro-gulp-sass original
+    _ops['fontName']           = _ops['fontName']        || 'icon';
+    _ops['formats']            = _ops['formats']         || ['ttf', 'eot', 'woff'];
+    _ops['descent']            = _ops['descent']         || 0;
+    _ops['ext2format']         = _ops['ext2format']      || { 'woff':'woff', 'ttf':'truetype', 'svg':'svg' }, // withpro-gulp-sass original
     _ops['prependUnicode']     = _ops['prependUnicode']     !== undefined ? _ops['prependUnicode']     : true;
     _ops['autohint']           = _ops['autohint']           !== undefined ? _ops['autohint']           : false;
     _ops['fixedWidth']         = _ops['fixedWidth']         !== undefined ? _ops['fixedWidth']         : false;
     _ops['centerHorizontally'] = _ops['centerHorizontally'] !== undefined ? _ops['centerHorizontally'] : false;
     _ops['normalize']          = _ops['normalize']          !== undefined ? _ops['normalize']          : true;
 }
+
+// /////////////////////////////////////////////////////////////////////////////
+// 
+// glyphs functions
+// 
+// /////////////////////////////////////////////////////////////////////////////
+let fontPath = function(fontName, changeExts = false, css = false){
+    let ext2format      = conf.options.iconfont.ext2format;
+    let exts            = changeExts || conf.options.iconfont.formats;
+    let fontPathFromCSS = path.relative(conf.path.dest.iconfont, conf.path.dest.font);
+    let cssPath         = null;
+    let result          = [];
+    let ext;
+    for(let i = 0; i < exts.length; i++){
+        ext = exts[i];
+        if(!ext2format[ext]) continue;
+        if(css){
+            cssPath = path.join(fontPathFromCSS, fontName+'.'+ext);
+            result.push(`url('${cssPath}') format('${ext2format[ext]}')`);
+        }else{
+            result.push(`url($path+'${fontName}.${ext}') format('${ext2format[ext]}')`);
+        }
+    }
+    result = result.join();
+    return result;
+}
+
 
 // /////////////////////////////////////////////////////////////////////////////
 // 
@@ -148,6 +174,7 @@ conf.functions = {
         let target = path.join(conf.path.src.sass, '**/*.s[ac]ss');
         let dest   = conf.path.dest.css;
         return gulp.src(target)
+            .pipe(plumber(ops.plumber))
             .pipe(gulpIf(isWatching, cached('sass')))
             // -----------------------------------------------------------------
             // http://qiita.com/joe-re/items/542b3f6fdc577cf50509
@@ -164,7 +191,6 @@ conf.functions = {
                 addParent(file.path);
                 return gulp.src(files, { base : conf.path.src.sass});
             })))
-            .pipe(plumber(ops.plumber))
             .pipe(sass.sync(ops.sass))
             .pipe(pleeease(ops.pleeease))
             .pipe(plumber.stop())
@@ -189,12 +215,14 @@ conf.functions = {
         return gulp.src(src)
             .pipe(iconfont(conf.options.iconfont))
             .on('glyphs', function(glyphs, options){
-                let name  = conf.options.iconfont.fontName;
-                let dest  = path.join(conf.path.dest.iconfont, 'sample');
-                let param = {
-                    'fontName'  : name,
-                    'className' : 'iconfont',
-                    'glyphs'    : glyphs.map(function(glyph){
+                let name     = conf.options.iconfont.fontName;
+                let dest     = path.join(conf.path.dest.iconfont, 'sample');
+                let sassDest = conf.path.src.sassMixin;
+                let param    = {
+                    'fontName'     : name,
+                    'className'    : 'iconfont',
+                    'sassFontPath' : fontPath,
+                    'glyphs'       : glyphs.map(function(glyph){
                         return {
                             'name'      : glyph.name,
                             'codepoint' : glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase()
@@ -209,8 +237,8 @@ conf.functions = {
                 // Sass
                 gulp.src('./task-assets/iconfont/template/fontawesome.sass')
                    .pipe(consolidate('swig', param))
-                   .pipe(rename({ basename : name }))
-                   .pipe(gulp.dest(dest))
+                   .pipe(rename({ basename : '_'+name }))
+                   .pipe(gulp.dest(sassDest))
                 // HTML
                 gulp.src('./task-assets/iconfont/template/fontawesome.html')
                    .pipe(consolidate('swig', param))
