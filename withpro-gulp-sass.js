@@ -8,7 +8,7 @@ let sassTypes       = require('node-sass').types;
 let grapher         = require('sass-graph');
 let graph           = null;
 let forEach         = require('gulp-foreach');
-let sassImageHelper = require('./task-assets/sass/functions/image-helper');
+let sassImageHelper = require(path.join(__dirname, 'task-assets/sass/functions/image-helper'));
 let notifier        = require('node-notifier');
 let plumber         = require('gulp-plumber');
 let pleeease        = require('gulp-pleeease');
@@ -158,7 +158,6 @@ let fontPath = function(fontName, changeExts = false, css = false){
     return result;
 }
 
-
 // /////////////////////////////////////////////////////////////////////////////
 // 
 // TASK
@@ -230,17 +229,17 @@ conf.functions = {
                     })
                 };
                 // CSS
-                gulp.src('./task-assets/iconfont/template/fontawesome.css')
+                gulp.src(path.join(__dirname, 'task-assets/iconfont/template/fontawesome.css'))
                    .pipe(consolidate('swig', param))
                    .pipe(rename({ basename : name }))
                    .pipe(gulp.dest(dest))
                 // Sass
-                gulp.src('./task-assets/iconfont/template/fontawesome.sass')
+                gulp.src(path.join(__dirname, 'task-assets/iconfont/template/fontawesome.sass'))
                    .pipe(consolidate('swig', param))
                    .pipe(rename({ basename : '_'+name }))
                    .pipe(gulp.dest(sassDest))
                 // HTML
-                gulp.src('./task-assets/iconfont/template/fontawesome.html')
+                gulp.src(path.join(__dirname, 'task-assets/iconfont/template/fontawesome.html'))
                    .pipe(consolidate('swig', param))
                    .pipe(rename({ basename : name }))
                    .pipe(gulp.dest(dest))
