@@ -1,18 +1,36 @@
-Sassの開発環境です。
+Gulpを使ったSassの開発環境です。  
+
+## 出来ること
+
+- Sass, Scssファイルのビルド
+- Sass, Scssファイルの監視
+- 画像の幅取得、高さ取得、パスの取得
+- iconfontの生成
+
+画像の幅、高さ、パスはCompass image helperと同様に
+```sass
+a
+    background : image-url("hello.jpg")
+    width      : image-width("hello.jpg")
+    height     : image-height("hello.jpg")
+```
 
 ## 使い方
 
 ```bash
-$ npm run sass-watch # watching sass file.
-$ npm run sass-build # building sass file.
-$ npm run iconfont   # generate icon font.
+$ gulp sass-watch # watching sass file.
+$ gulp sass-build # building sass file.
+$ gulp iconfont   # generate icon font.
 ```
 
 ## 設定変更
 
-単体で利用する場合、「withpro-gulp-sass.js」を変更してください。
+出力先の変更などは以下の様にします。
 
 ```js
+let conf = require('./withpro-gulp-sass');
+let gulp = require('gulp');
+
 conf : {
     'path' : {
         'project' : '/', // project root from web root.
@@ -32,9 +50,32 @@ conf : {
     },
     'browsers' : ['last 3 version'] // gulp-pleeeease support level.
 }
+
+conf.init();
 ```
 
-ローカルモジュールとして利用する場合は
+## conf.path オブジェクト
+
+| プロパティ         | 型            | 初期値          | 説明 |
+|--------------------|---------------|-----------------|--------|
+| path.project       | String        | /               |  |
+| path.src.sass      | String        | src/sass        |  |
+| path.src.sassMixin | String        | src/sass/mixin  |  |
+| path.src.font      | String        | src/font        |  |
+| path.src.iconfont  | String        | src/font/icon   |  |
+| path.src.lib       | String<Array> | [src/sass]      |  |
+| path.dest.css      | String        | build/css       |  |
+| path.dest.image    | String        | build/img       |  |
+| path.dest.font     | String        | build/font      |  |
+| path.dest.iconfont | String        | build/font/icon |  |
+
+設定の変更はinit()の前に行ってください。
+
+## 詳細な設定変更
+
+
+
+モジュールとして利用する場合は
 
 ```js
 let gulp   = require('gulp');
@@ -46,17 +87,5 @@ let wgsass = require('withpro-gulp-sass');
 // wgs.path.src.font = 'assets/font';
 // -----------------------------------------------------------------------------
 
-let keys = Object.keys(wgsass.functions);
-keys.forEach((key)=>{
-    let f = withproGulpSass.functions;
-    if(Array.isArray(f[key])){
-        if(typeof f[key] === 'function'){
-            gulp.task(key, f[key][0]);
-        }else{
-            gulp.task(key, f[key][0], f[key][1]);
-        }
-    }else{
-        gulp.task(key, f[key]);
-    }
-});
+wgsass.init();
 ```
