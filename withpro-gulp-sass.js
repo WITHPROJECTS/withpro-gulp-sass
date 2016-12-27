@@ -19,6 +19,7 @@ let iconfont        = require('gulp-iconfont');
 let consolidate     = require('gulp-consolidate');
 let rename          = require('gulp-rename');
 let isWatching      = false;
+let hasError        = false;
 
 //
 // The following contents is default config that path settings, setting tasks, and task options.
@@ -104,17 +105,24 @@ let optionInit = ()=>{
     ops['plumber'] = ops['plumber'] || {};
     _ops = ops['plumber'];
     _ops['errorHandler'] = _ops['errorHandler'] || function(err){
-        notifier.notify({
-            'title'   : `Sass ${err.name}`,
-            'message' : `${err.name} : ${err.relativePath}\n{ Line : ${err.line}, Column : ${err.column} }`,
-            'sound'   : 'Pop'
-        });
-        console.log(`---------------------------------------------`.red.bold);
-        console.log(`Line: ${err.line}, Column: ${err.column}`.red.bold);
-        console.error(err.message.red.bold);
-        console.log(`---------------------------------------------`.red.bold);
-        delete cached.caches['sass'];
-        gulp.emit('end');
+        if(hasError){
+            if(cached.caches['sass']) cached.caches['sass'] = {};
+            gulp.emit('end');
+        }else{
+            notifier.notify({
+                'title'   : `Sass ${err.name}`,
+                'message' : `${err.name} : ${err.relativePath}\n{ Line : ${err.line}, Column : ${err.column} }`,
+                'sound'   : 'Pop'
+            });
+            console.log(`---------------------------------------------`.red.bold);
+            console.log(`Line: ${err.line}, Column: ${err.column}`.red.bold);
+            console.error(err.message.red.bold);
+            console.log(`---------------------------------------------`.red.bold);
+            if(cached.caches['sass']) cached.caches['sass'] = {};
+            // delete cached.caches['sass'];
+            gulp.emit('end');
+            hasError = true;
+        }
     };
     // -------------------------------------------------------------------------
     // iconfont
@@ -172,6 +180,7 @@ conf.functions = {
         let ops    = conf.options;
         let target = path.join(conf.path.src.sass, '**/*.s[ac]ss');
         let dest   = conf.path.dest.css;
+        hasError   = false;
         return gulp.src(target)
             .pipe(plumber(ops.plumber))
             .pipe(gulpIf(isWatching, cached('sass')))
