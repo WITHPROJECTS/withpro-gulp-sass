@@ -22,12 +22,12 @@ module.exports = (param)=>{
         'image-width($input: "")' : (input)=>{
             let getInputVal = input.getValue();
             let filePath    = path.join(rtvPath.image, getInputVal);
-            return new sassType.String(sizeOf(filePath).width+'px');
+            return new sassType.Number(sizeOf(filePath).width, 'px');
         },
         'image-height($input: "")' : (input)=>{
             let getInputVal = input.getValue();
             let filePath    = path.join(rtvPath.image, getInputVal);
-            return new sassType.String(sizeOf(filePath).height+'px')
+            return new sassType.Number(sizeOf(filePath).height, 'px')
         }
     }
 }
