@@ -1,39 +1,61 @@
 Gulpを使ったSassの開発環境です。  
 
-## 出来ること
+# 出来ること
 
-- Sass, Scssファイルのビルド
-- Sass, Scssファイルの監視
+- Sass, Scssファイルの監視とビルド
 - 画像の幅取得、高さ取得、パスの取得
 - iconfontの生成
 
-画像の幅、高さ、パスはCompass image helperと同様に
-```sass
-a
-    background : image-url("hello.jpg")
-    width      : image-width("hello.jpg")
-    height     : image-height("hello.jpg")
+RubyのSass、Compassは使用していません。
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+# インストール
+
+```
+$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
 ```
 
-## 使い方
+# 使い方
+
+```js
+// gulpfile.js
+let gulp = require('gulp');
+let conf = require('withpro-gulp-sass');
+conf.init();
+```
+
+## 監視
+```bash
+$ gulp sass-watch
+```
+
+## ビルド
 
 ```bash
-$ gulp sass-watch # watching sass file.
-$ gulp sass-build # building sass file.
-$ gulp iconfont   # generate icon font.
+$ gulp sass-build
 ```
 
-## 設定変更
+## iconfont
+
+```bash
+$ gulp iconfont
+```
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+# 設定変更
 
 出力先の変更などは以下の様にします。
 
 ```js
-let conf = require('./withpro-gulp-sass');
+// gulpfile.js
 let gulp = require('gulp');
+let conf = require('./withpro-gulp-sass');
 
 conf : {
     'path' : {
-        'project' : '/', // project root from web root.
+        'project' : '/',
         'src' : {
             'sass'      : 'src/sass',
             'sassMixin' : 'src/sass/mixin',
@@ -54,38 +76,63 @@ conf : {
 conf.init();
 ```
 
-## conf.path オブジェクト
+設定の変更は必ず"**init()**"の前に行ってください。
 
-| プロパティ         | 型            | 初期値          | 説明 |
-|--------------------|---------------|-----------------|--------|
-| path.project       | String        | /               |  |
-| path.src.sass      | String        | src/sass        |  |
-| path.src.sassMixin | String        | src/sass/mixin  |  |
-| path.src.font      | String        | src/font        |  |
-| path.src.iconfont  | String        | src/font/icon   |  |
-| path.src.lib       | String<Array> | [src/sass]      |  |
-| path.dest.css      | String        | build/css       |  |
-| path.dest.image    | String        | build/img       |  |
-| path.dest.font     | String        | build/font      |  |
-| path.dest.iconfont | String        | build/font/icon |  |
+## conf.path
 
-設定の変更はinit()の前に行ってください。
+| プロパティ    | 型            | 初期値          |
+|---------------|---------------|-----------------|
+| project       | String        | /               |
+| src.sass      | String        | src/sass        |
+| src.sassMixin | String        | src/sass/mixin  |
+| src.font      | String        | src/font        |
+| src.iconfont  | String        | src/font/icon   |
+| src.lib       | String<Array> | [src/sass]      |
+| dest.css      | String        | build/css       |
+| dest.image    | String        | build/img       |
+| dest.font     | String        | build/font      |
+| dest.iconfont | String        | build/font/icon |
 
-## 詳細な設定変更
+## conf.options 
 
+options オブジェクトにはタスクのオプションを渡すことができます。
 
+### conf.options.sass
 
-モジュールとして利用する場合は
+[gulp-sass](https://www.npmjs.com/package/gulp-sass)のオプション  
+以下のオプションがデフォルトで設定されています。
 
-```js
-let gulp   = require('gulp');
-let wgsass = require('withpro-gulp-sass');
+| プロパティ   | 初期値            |
+|--------------|-------------------|
+| outputStyle  | compressed        |
+| includePaths | conf.path.src.lib |
+| functions    | sassImageHelper() |
 
-// -----------------------------------------------------------------------------
-// 設定変更
-// wgs.path.src.sass = 'assets/sass';
-// wgs.path.src.font = 'assets/font';
-// -----------------------------------------------------------------------------
+### conf.options.pleeease
 
-wgsass.init();
-```
+[gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease)のオプション  
+以下のオプションがデフォルトで設定されています。
+
+| プロパティ            | 初期値        |
+|-----------------------|---------------|
+| minifier              | false         |
+| rem                   | true          |
+| opacity               | true          |
+| autoprefixer          | Object        |
+| autoprefixer.browsers | conf.browsers |
+| autoprefixer.cascade  | conf.browsers |
+
+### conf.options.iconfont
+
+[gulp-iconfont](https://www.npmjs.com/package/gulp-iconfont)のオプション  
+以下のオプションがデフォルトで設定されています。
+
+| プロパティ         | 初期値                 |
+|--------------------|------------------------|
+| formats            | ['ttf', 'eot', 'woff'] |
+| descent            | 0                      |
+| prependUnicode     | true                   |
+| autohint           | false                  |
+| fixedWidth         | false                  |
+| centerHorizontally | false                  |
+| normalize          | true                   |
