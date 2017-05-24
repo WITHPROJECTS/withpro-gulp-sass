@@ -1,12 +1,12 @@
 {
   "name": "withpro-gulp-sass",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "gulp sass develop env.",
   "main": "withpro-gulp-sass.js",
   "private": true,
   "engines": {
-    "node": "^6.9.1",
-    "npm": "^4.0.1"
+    "node": "^6.9.5",
+    "npm": "^3.10.10"
   },
   "dependencies": {
     "colors": "^1.1.2",
@@ -19,12 +19,12 @@
     "gulp-pleeease": "^2.0.2",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
+    "gulp-sass": "^3.1.0",
     "gulp-sass-image": "^1.0.2",
-    "gulp-sourcemaps": "^1.9.1",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-watch": "^4.3.11",
     "image-size": "^0.5.0",
-    "node-notifier": "^4.6.1",
+    "node-notifier": "^5.1.2",
     "sass-graph": "^2.1.2",
     "swig": "^1.4.2"
   },
