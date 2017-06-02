@@ -14,7 +14,6 @@ let plumber         = require('gulp-plumber');
 let pleeease        = require('gulp-pleeease');
 let cached          = require('gulp-cached');
 let sourcemaps      = require('gulp-sourcemaps');
-let colors          = require('colors');
 let iconfont        = require('gulp-iconfont');
 let consolidate     = require('gulp-consolidate');
 let rename          = require('gulp-rename');
