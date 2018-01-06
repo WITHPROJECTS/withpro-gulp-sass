@@ -19,8 +19,15 @@ $ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
 ```js
 // gulpfile.js
 let gulp = require('gulp');
-let conf = require('withpro-gulp-sass');
-conf.init();
+let Task = require('withpro-gulp-sass');
+
+let inputRoot  = `${__dirname}/src`;  // 入力ファイル群のルートディレクトリパス
+let outputRoot = `${__dirname}/dest`; // 出力ファイル群のルートディレクトリパス
+
+let task = new Task( inputRoot, outputRoot );
+task.setPath('input', {
+    
+});
 ```
 
 ## 監視
