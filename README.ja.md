@@ -6,8 +6,6 @@ Gulpを使ったSassの開発環境です。
 - 画像の幅取得、高さ取得、パスの取得
 - iconfontの生成
 
-RubyのSass、Compassは使用していません。
-
 # インストール
 
 ```
@@ -18,17 +16,43 @@ $ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
 
 ```js
 // gulpfile.js
-let gulp = require('gulp');
-let Task = require('withpro-gulp-sass');
+let task = require('withpro-gulp-sass');
 
-let inputRoot  = `${__dirname}/src`;  // 入力ファイル群のルートディレクトリパス
-let outputRoot = `${__dirname}/dest`; // 出力ファイル群のルートディレクトリパス
-
-let task = new Task( inputRoot, outputRoot );
+/**
+ * 入力パスの設定
+ * task.setPath( 'input', path={} );
+ * 
+ * @param {string}        [path.root=__dirname] 入力ファイル群のルートディレクトリパス
+ * @param {string}        [path.sass='']        Sassファイルが入ったディレクトリのパス path.rootからの相対パス
+ * @param {string}        [path.font='']        フォントファイルが入ったディレクトリのパス path.fontからの相対パス
+ * @param {Array<string>} [path.lib=['']]       SassオプションincludePaths
+ */
 task.setPath('input', {
-    
+    'root' : `${__dirname}/src`,
+    'sass' : 'sass',
+    'font' : 'font',
+    'lib'  : ['../lib/sass']
+});
+
+/**
+ * 出力パスの設定
+ * task.setPath( 'output', path={} );
+ *
+ * @param {string} [path.root=__dirname] 出力ファイル群のルートディレクトリパス
+ * @param {string} [path.css='']         CSSファイルを出力するディレクトリのパス path.rootからの相対パス
+ * @param {string} [path.font='']        フォントファイルを出力するディレクトリのパス path.rootからの相対パス
+ * @param {string} [path.image='']       画像ファイルが入っているディレクトリのパス path.rootからの相対パス
+ */
+// 
+task.setPath('output', {
+    'root'  : `${__dirname}/src`, // 入力ファイル群のルートディレクトリパス
+    'css'   : 'css', //  (オプション：デフォルトは空文字)
+    'font'  : 'font', // 
+    'image' : 'img', // 
 });
 ```
+
+
 
 ## 監視
 ```bash

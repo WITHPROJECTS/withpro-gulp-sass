@@ -1,7 +1,23 @@
 const path = require('path');
-const gulp = require('gulp');
 
 let TaskAssist = require( path.join( __dirname, 'asset/TaskAssist' ) );
+let taskAssist = new TaskAssist();
+
+// オプションの設定
+let ops = require( path.join( __dirname, 'asset/default-options' ) );
+for(let key in ops) taskAssist.setOption( key, ops[key] );
+
+// タスクの設定
+let tasks = require( path.join( __dirname, 'asset/default-tasks' ) );
+for(let key in tasks) taskAssist.setTask( key, tasks[key] );
+
+// let taskObj = require();
+
+// =============================================================================
+// TASK : Sass BUILD
+// 
+// task.setTask( 'sass-build', s );
+
 
 
 // TaskAssist.addTask( 'sass-build', function(){
@@ -315,4 +331,4 @@ let TaskAssist = require( path.join( __dirname, 'asset/TaskAssist' ) );
 // 
 // module.exports = conf;
 
-module.exports = new TaskAssist();
+module.exports = taskAssist;
