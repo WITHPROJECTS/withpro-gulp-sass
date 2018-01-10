@@ -103,7 +103,7 @@ In addition to the package default setting items, the following items can be set
 
 ### enqueueFunctions
 
-it dynamically registers your Sass functions to a functions property.
+it dynamically registers your Sass functions to a functions property.  
 the register function is actioned when compiling sass file. this function must return object, and return value is registered to functions property.
 
 if you omit 'this' property, the 'this' of func function is 'TaskAssist'.
