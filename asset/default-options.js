@@ -2,7 +2,6 @@ const notifier = require('node-notifier');
 const path     = require('path');
 const cached   = require('gulp-cached');
 
-
 let options = {};
 
 /**

@@ -8,16 +8,16 @@ const gulpIf      = require('gulp-if');       // if文
 const gulpForEach = require('gulp-foreach');  // forEach文
 const grapher     = require('sass-graph');    // 
 
-let graph      = null;
-let taskStatus = require(`${__dirname}/task-status`);
-let tasks      = {};
+let graph = null;
+let tasks = {};
 
 // =============================================================================
 // Sassのコンパイル
 // 
 tasks['build:sass'] = {
     'task' : function( done ){
-        taskStatus.mainTaskID = 'build:sass';
+        let status = this.status;
+        status.mainTaskID = 'build:sass';
 
         let _root  = this.getPath( 'input', 'sass' );
         let target = path.join( _root, `**/*.${this.ext.sass}`);
@@ -40,9 +40,9 @@ tasks['build:sass'] = {
 
         gulp.src(target)
             .pipe( plumber( ops.plumber ) )
-            .pipe( gulpIf( taskStatus.isWatching, cached('sass') ) )
+            .pipe( gulpIf( status.isWatching, cached('sass') ) )
             .pipe( gulpIf(
-                taskStatus.isWatching,
+                status.isWatching,
                 gulpForEach (
                     ( currentStream, file )=>{
                         let files     = [file.path];
@@ -72,8 +72,9 @@ tasks['build:sass'] = {
 // 
 tasks['watch:sass'] = {
     'task' : function ( done ) {
-        taskStatus.mainTaskID = 'watch:sass';
-        taskStatus.isWatching = true;
+        let status = this.status;
+        status.mainTaskID = 'watch:sass';
+        status.isWatching = true;
         graph = grapher.parseDir( this.getPath( 'input', 'sass' ), {
             extensions : ['sass', 'scss']
         });
