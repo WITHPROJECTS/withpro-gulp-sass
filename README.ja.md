@@ -1,134 +1,141 @@
 Gulpを使ったSassの開発環境です。  
 
-# 出来ること
+| engines | version |
+|---------|---------|
+| node.js | ^8.9.3  |
+| npm     | ^5.6.0  |
 
-- Sass, Scssファイルの監視とビルド
-- 画像の幅取得、高さ取得、パスの取得
-- iconfontの生成
+以下のことが出来ます
 
-RubyのSass、Compassは使用していません。
+- Sassファイル(.s[ac]ss)の監視とビルド
+- 画像の幅、高さ、パスを取得するSass関数の提供
+- アイコンフォントの生成
 
 # インストール
 
 ```
-$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
+$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git\#v1
 ```
 
 # 使い方
 
+「gulpfile.js」に入力ファイルと出力ファイルの設定を記述します。
+
 ```js
-// gulpfile.js
-let gulp = require('gulp');
-let conf = require('withpro-gulp-sass');
-conf.init();
+let task = require('withpro-gulp-sass');
+
+task
+    /**
+     * 入力パスの設定
+     * task.setPath( 'input', path={} );
+     *
+     * @arg    {string}        inout
+     * @arg    {Object}        [path={}]
+     * @arg    {string}        [path.root=__dirname] 入力ファイル群のルートディレクトリパス
+     * @arg    {string}        [path.sass='']        Sassファイルが入っているディレクトリのパス path.rootからの相対パス
+     * @arg    {Array<string>} [path.lib=['']]       node-sassのincludePaths path.rootからの相対パス
+     * @return {TaskAssist}
+     */
+    .setPath( 'input', {
+        'root' : `${__dirname}/src`,
+        'sass' : 'sass',
+        'lib'  : ['../lib/sass']
+    } )
+    /**
+     * 出力パスの設定
+     * task.setPath( 'output', path={} );
+     *
+     * @arg    {string}     inout
+     * @arg    {Object}     [path={}]
+     * @arg    {string}     [path.root=__dirname] 出力ファイル群のルートディレクトリパス
+     * @arg    {string}     [path.css='']         CSSファイルを出力するディレクトリのパス path.rootからの相対パス
+     * @arg    {string}     [path.image='']       画像ファイルが入っているディレクトリのパス path.rootからの相対パス
+     * @return {TaskAssist}
+     */
+    // 
+    .setPath( 'output', {
+        'root'  : `${__dirname}/src`,
+        'css'   : 'css',
+        'image' : 'img'
+    } );
 ```
 
-## 監視
+## 実行
+
 ```bash
-$ gulp sass-watch
+# Sassファイルの監視
+$ npm run watch:sass
 ```
 
-## ビルド
-
 ```bash
-$ gulp sass-build
-```
-
-## iconfont
-
-```bash
-$ gulp iconfont
+# Sassファイルのコンパイル
+$ npm run build:sass
 ```
 
 # 設定変更
 
-出力先の変更などは以下の様にします。
+setOption関数を使うことでタスクの挙動を変更することが出来ます。
 
 ```js
 // gulpfile.js
-let gulp = require('gulp');
-let conf = require('./withpro-gulp-sass');
+let task = require('withpro-gulp-sass');
 
-conf : {
-    'path' : {
-        'project' : '/',
-        'src' : {
-            'sass'      : 'src/sass',
-            'sassMixin' : 'src/sass/mixin',
-            'font'      : 'src/font',
-            'iconfont'  : 'src/font/icon',
-            'lib'       : ['src/sass']
-        },
-        'dest' : {
-            'css'      : 'build/css',
-            'image'    : 'build/img',
-            'font'     : 'build/font',
-            'iconfont' : 'build/font/icon'
-        }
-    },
-    'browsers' : ['last 3 version'] // gulp-pleeeease support level.
-}
-
-conf.init();
+/**
+ * オプションをセットする
+ * @arg    {string}     name        設定名
+ * @arg    {Object}     option      設定する値
+ * @arg    {boolean}    [diff=true] true：差分　false：差し替え
+ * @return {TaskAssist}
+ */
+task.setOption( 'sass', {} );
 ```
 
-設定の変更は必ず"**init()**"の前に行ってください。
+設定名(name)は以下のパッケージを指します。
 
-## conf.path
+| name     | package                                                      |
+|----------|--------------------------------------------------------------|
+| sass     | [gulp-sass](https://www.npmjs.com/package/gulp-sass)         |
+| pleeease | [gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease) |
+| plumber  | [gulp-plumber](https://www.npmjs.com/package/gulp-plumber)   |
 
-| プロパティ    | 型            | 初期値          |
-|---------------|---------------|-----------------|
-| project       | String        | /               |
-| src.sass      | String        | src/sass        |
-| src.sassMixin | String        | src/sass/mixin  |
-| src.font      | String        | src/font        |
-| src.iconfont  | String        | src/font/icon   |
-| src.lib       | String<Array> | [src/sass]      |
-| dest.css      | String        | build/css       |
-| dest.image    | String        | build/img       |
-| dest.font     | String        | build/font      |
-| dest.iconfont | String        | build/font/icon |
+## gulp-sass
 
-## conf.options 
+パッケージ標準の設定項目の他に以下の項目を設定できます。
 
-options オブジェクトにはタスクのオプションを渡すことができます。
+### enqueueFunctions
 
-### conf.options.sass
+functionsを動的に追加します。  
+enqueueFunctionsに登録された関数はSassコンパイル前に実行されfunctionsに登録されます。
 
-[gulp-sass](https://www.npmjs.com/package/gulp-sass)のオプション  
-以下のオプションがデフォルトで設定されています。
+プロパティ「this」を省略した場合はfuncのthisがTaskAssistになります。
 
-| プロパティ   | 初期値            |
-|--------------|-------------------|
-| outputStyle  | compressed        |
-| includePaths | conf.path.src.lib |
-| functions    | sassImageHelper() |
+```js
+/**
+ * @prop {Object}   enqueueFunctions
+ * @prop {Object}   enqueueFunctions.xxx                  key/valueの形でSassのカスタム関数を定義する。
+ * @prop {function} enqueueFunctions.xxx.func             Sassコンパイル処理時に実行され、返り値をfunctionsとして登録する
+ * @prop {boolean}  [enqueueFunctions.xxx.this=undefined] funcを拘束するthis 省略した場合はTaskAssistのインスタンスがthisになる
+ */
+task.setOption( 'sass', {
+    'enqueueFunctions' : {
+        'myFunction' : {
+            'func' : function(){
+                ...
+                return {
+                    'double' : function(){...},
+                    'add'    : function(){...},
+                }
+            },
+            'this' : self
+        }
+    }
+} );
+```
 
-### conf.options.pleeease
+## gulp-plumber
 
-[gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease)のオプション  
-以下のオプションがデフォルトで設定されています。
+パッケージ標準の設定項目の他に以下の項目を設定できます。
 
-| プロパティ            | 初期値        |
-|-----------------------|---------------|
-| minifier              | false         |
-| rem                   | true          |
-| opacity               | true          |
-| autoprefixer          | Object        |
-| autoprefixer.browsers | conf.browsers |
-| autoprefixer.cascade  | conf.browsers |
+### sound
 
-### conf.options.iconfont
-
-[gulp-iconfont](https://www.npmjs.com/package/gulp-iconfont)のオプション  
-以下のオプションがデフォルトで設定されています。
-
-| プロパティ         | 初期値                 |
-|--------------------|------------------------|
-| formats            | ['ttf', 'eot', 'woff'] |
-| descent            | 0                      |
-| prependUnicode     | true                   |
-| autohint           | false                  |
-| fixedWidth         | false                  |
-| centerHorizontally | false                  |
-| normalize          | true                   |
+通知時のサウンドを変更します。  

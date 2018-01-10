@@ -1,129 +1,140 @@
-Sass develop env with Gulp.
+The Sass compiling task runner.
 
-# What this can do
+| engines | version |
+|---------|---------|
+| node.js | ^8.9.3  |
+| npm     | ^5.6.0  |
 
-- Watching and building Sass, Scss files.
-- Get image url, width and height.
-- Build iconfonts.
+it is able to
+
+- watch and compile Sass files(.s[ac]ss)
+- it offer functions that get image width,height and url
 
 # Install
 
 ```
-$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
+$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git\#v1
 ```
 
-# Usage
+# How to use
+
+you write to your gulpfile.js that setting of input files and output files.
+
+```js
+let task = require('withpro-gulp-sass');
+
+task
+    /**
+     * input path setting
+     * task.setPath( 'input', path={} );
+     *
+     * @arg    {string}        inout
+     * @arg    {Object}        [path={}]
+     * @arg    {string}        [path.root=__dirname] root directory path of input files.
+     * @arg    {string}        [path.sass='']        the Sass files directory. (it is relative path from path.root)
+     * @arg    {Array<string>} [path.lib=['']]       includePaths of node-sass. (it is relative path from path.root)
+     * @return {TaskAssist}
+     */
+    .setPath( 'input', {
+        'root' : `${__dirname}/src`,
+        'sass' : 'sass',
+        'lib'  : ['../lib/sass']
+    } )
+    /**
+     * 出力パスの設定
+     * task.setPath( 'output', path={} );
+     *
+     * @arg    {string}     inout
+     * @arg    {Object}     [path={}]
+     * @arg    {string}     [path.root=__dirname] root directory path of output files.
+     * @arg    {string}     [path.css='']         the directory that css files is outputted. (it is relative path from path.root)
+     * @arg    {string}     [path.image='']       the image files directory. (it is relative path from path.root)
+     * @return {TaskAssist}
+     */
+    // 
+    .setPath( 'output', {
+        'root'  : `${__dirname}/src`,
+        'css'   : 'css',
+        'image' : 'img'
+    } );
+```
+
+## Scripts
+
+```bash
+# watching Sass files
+$ npm run watch:sass
+```
+
+```bash
+# Compiling Sass files.
+$ npm run build:sass
+```
+
+# Change setting
+
+By using the setOption function, you can change to behavior of task.
 
 ```js
 // gulpfile.js
-let gulp = require('gulp');
-let conf = require('withpro-gulp-sass');
-conf.init();
+let task = require('withpro-gulp-sass');
+
+/**
+ * set options
+ * @arg    {string}     name        setting name
+ * @arg    {Object}     option      setting value
+ * @arg    {boolean}    [diff=true] true：diff　false：change
+ * @return {TaskAssist}
+ */
+task.setOption( 'sass', {} );
 ```
 
-## Watcing
-```bash
-$ gulp sass-watch
-```
+the setting name(name) refers to the following packages.
 
-## Building
+| name     | package                                                      |
+|----------|--------------------------------------------------------------|
+| sass     | [gulp-sass](https://www.npmjs.com/package/gulp-sass)         |
+| pleeease | [gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease) |
+| plumber  | [gulp-plumber](https://www.npmjs.com/package/gulp-plumber)   |
 
-```bash
-$ gulp sass-build
-```
+## gulp-sass
 
-## Build iconfont
+In addition to the package default setting items, the following items can be set.
 
-```bash
-$ gulp iconfont
-```
+### enqueueFunctions
 
-# change configuration
+it dynamically registers your Sass functions to a functions property.  
+the register function is actioned when compiling sass file. this function must return object, and return value is registered to functions property.
 
-For example, You want to change source files and destribution files path.
-You can do it as follows.
+if you omit 'this' property, the 'this' of func function is 'TaskAssist'.
 
 ```js
-// gulpfile.js
-let gulp = require('gulp');
-let conf = require('./withpro-gulp-sass');
-
-conf.path = {
-    'project' : '/',
-    'src' : {
-        'sass'      : 'src/sass',
-        'sassMixin' : 'src/sass/mixin',
-        'font'      : 'src/font',
-        'iconfont'  : 'src/font/icon',
-        'lib'       : ['src/sass']
-    },
-    'dest' : {
-        'css'      : 'build/css',
-        'image'    : 'build/img',
-        'font'     : 'build/font',
-        'iconfont' : 'build/font/icon'
+/**
+ * @prop {Object}   enqueueFunctions
+ * @prop {Object}   enqueueFunctions.xxx                  define Sass functions in the form of key/value.
+ * @prop {function} enqueueFunctions.xxx.func
+ * @prop {boolean}  [enqueueFunctions.xxx.this=undefined] 'this' of func function.
+ */
+task.setOption( 'sass', {
+    'enqueueFunctions' : {
+        'myFunction' : {
+            'func' : function(){
+                ...
+                return {
+                    'double' : function(){...},
+                    'add'    : function(){...},
+                }
+            },
+            'this' : self
+        }
     }
-}
-conf.init();
+} );
 ```
 
-Make sure to change the setting before "**init()**".
+## gulp-plumber
 
-## conf.path
+In addition to the package default setting items, the following items can be set.
 
-| Property      | Type          | Default         |
-|---------------|---------------|-----------------|
-| project       | String        | /               |
-| src.sass      | String        | src/sass        |
-| src.sassMixin | String        | src/sass/mixin  |
-| src.font      | String        | src/font        |
-| src.iconfont  | String        | src/font/icon   |
-| src.lib       | String<Array> | [src/sass]      |
-| dest.css      | String        | build/css       |
-| dest.image    | String        | build/img       |
-| dest.font     | String        | build/font      |
-| dest.iconfont | String        | build/font/icon |
+### sound
 
-## conf.options 
-
-You can pass in task options to option objects.
-
-### conf.options.sass
-
-[gulp-sass](https://www.npmjs.com/package/gulp-sass) options. 
-Default options as follows.
-
-| Property     | Default           |
-|--------------|-------------------|
-| outputStyle  | compressed        |
-| includePaths | conf.path.src.lib |
-| functions    | sassImageHelper() |
-
-### conf.options.pleeease
-
-[gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease) options.  
-Default options as follows.
-
-| Property              | Default       |
-|-----------------------|---------------|
-| minifier              | false         |
-| rem                   | true          |
-| opacity               | true          |
-| autoprefixer          | Object        |
-| autoprefixer.browsers | conf.browsers |
-| autoprefixer.cascade  | conf.browsers |
-
-### conf.options.iconfont
-
-[gulp-iconfont](https://www.npmjs.com/package/gulp-iconfont) options.  
-Default options as follows.
-
-| Property           | Default                |
-|--------------------|------------------------|
-| formats            | ['ttf', 'eot', 'woff'] |
-| descent            | 0                      |
-| prependUnicode     | true                   |
-| autohint           | false                  |
-| fixedWidth         | false                  |
-| centerHorizontally | false                  |
-| normalize          | true                   |
+change sound type when notify

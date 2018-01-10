@@ -1,6 +1,14 @@
-let conf = require('./withpro-gulp-sass');
-let gulp = require('gulp');
+const path = require( 'path' );
+let task = require( path.join( __dirname, 'withpro-gulp-sass' ) );
 
-console.log(conf.options);
-
-conf.init();
+task
+    .setPath( 'input', {
+        'root' : `${__dirname}/src`,
+        'lib'  : ['../lib/sass'],
+        'sass' : 'sass'
+    })
+    .setPath( 'output', {
+        'root'  : `${__dirname}/dest`,
+        'css'   : 'css',
+        'image' : 'img'
+    });
