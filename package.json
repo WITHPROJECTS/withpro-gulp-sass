@@ -1,6 +1,6 @@
 {
   "name": "withpro-gulp-sass",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "gulp sass develop env.",
   "main": "withpro-gulp-sass.js",
   "private": true,
