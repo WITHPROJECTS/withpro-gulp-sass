@@ -5,12 +5,10 @@ task
     .setPath( 'input', {
         'root' : `${__dirname}/src`,
         'lib'  : ['../lib/sass'],
-        'sass' : 'sass',
-        'font' : 'font'
+        'sass' : 'sass'
     })
     .setPath( 'output', {
         'root'  : `${__dirname}/dest`,
         'css'   : 'css',
-        'font'  : 'font',
         'image' : 'img'
     });

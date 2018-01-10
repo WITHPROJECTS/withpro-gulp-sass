@@ -84,15 +84,4 @@ tasks['watch:sass'] = {
     }
 }
 
-// =============================================================================
-// アイコンフォント作成
-// 
-tasks['iconfont'] = {
-    'task' : function ( done ) {
-        taskStatus.mainTaskID = 'iconfont';
-        
-        done();
-    }
-}
-
 module.exports = tasks;

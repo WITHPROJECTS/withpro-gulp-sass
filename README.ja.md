@@ -31,16 +31,14 @@ task
      *
      * @arg    {string}        inout
      * @arg    {Object}        [path={}]
-     * @arg    {string}        [path.root=__dirname] 出力ファイル群のルートディレクトリパス
+     * @arg    {string}        [path.root=__dirname] 入力ファイル群のルートディレクトリパス
      * @arg    {string}        [path.sass='']        Sassファイルが入っているディレクトリのパス path.rootからの相対パス
-     * @arg    {string}        [path.font='']        フォントファイルが入っているディレクトリのパス path.rootからの相対パス
      * @arg    {Array<string>} [path.lib=['']]       node-sassのincludePaths path.rootからの相対パス
      * @return {TaskAssist}
      */
     .setPath( 'input', {
         'root' : `${__dirname}/src`,
         'sass' : 'sass',
-        'font' : 'font',
         'lib'  : ['../lib/sass']
     } )
     /**
@@ -51,7 +49,6 @@ task
      * @arg    {Object}     [path={}]
      * @arg    {string}     [path.root=__dirname] 出力ファイル群のルートディレクトリパス
      * @arg    {string}     [path.css='']         CSSファイルを出力するディレクトリのパス path.rootからの相対パス
-     * @arg    {string}     [path.font='']        フォントファイルを出力するディレクトリのパス path.rootからの相対パス
      * @arg    {string}     [path.image='']       画像ファイルが入っているディレクトリのパス path.rootからの相対パス
      * @return {TaskAssist}
      */
@@ -59,7 +56,6 @@ task
     .setPath( 'output', {
         'root'  : `${__dirname}/src`,
         'css'   : 'css',
-        'font'  : 'font',
         'image' : 'img'
     } );
 ```
@@ -74,11 +70,6 @@ $ npm run watch:sass
 ```bash
 # Sassファイルのコンパイル
 $ npm run build:sass
-```
-
-```bash
-# アイコンフォントの作成
-$ npm run iconfont
 ```
 
 # 設定変更

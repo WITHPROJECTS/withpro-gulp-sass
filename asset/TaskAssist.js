@@ -43,12 +43,10 @@ class TaskAssist {
             'root' : inputPath,
             'lib'  : [''],
             'sass' : '',
-            'font' : '',
         });
         this.setPath('output', {
             'root'  : outputPath,
             'css'   : '',
-            'font'  : '',
             'image' : ''
         });
         Object.defineProperty(this, 'path', { enumerable : false });
