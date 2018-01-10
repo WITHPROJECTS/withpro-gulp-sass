@@ -1,0 +1,36 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+// ------------------------------------
+// content
+// ------------------------------------
+.f__main
+    .m__page-title
+        background-image : image-url('page/event/info/page-title.jpg')
+
+    > section
+        padding-top : 4em
+        > section + section
+            margin-top : 4em
+        .m__sec-title--lv1--center
+            margin-bottom : 1.5em
+
+    .b__genre
+        .m__sec-title--lv2
+            margin-bottom : 1em
+        .m__text
+            margin-bottom : 2em
+
+    .b__staff
+        .m__staff-profile-list
+            box-sizing    : border-box
+            padding       : 0 $margin-small-l
+            margin-bottom : 4em
+
+    .b__entry
+        .m__sec-title--lv2--center
+            margin-bottom : 1.5em
+        .m__sec-title--lv3 + p
+            margin-bottom : 1.5em

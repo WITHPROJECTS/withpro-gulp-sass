@@ -1,0 +1,15 @@
+@import "def-reset"
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+@import "module/article--large"
+
+.m__tinymce-editor
+    +article-content-style
+    padding   : 10px
+    font-size : $base-font-size-l
+    > *:first-child
+        margin-top  : 0
+        padding-top : 0

@@ -1,0 +1,52 @@
+// 子テーマであり、共通CSSは親テーマから読んでいるので
+// ここではリセットCSSは読まない
+
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+// =============================================================================
+//
+// 親のスタイル修正
+//
+// コーディング規約違反の修正
+// - todo : 親テーマのスタイル修正は松井さんにやってもらう 17/10/19
+
+.m__anchor-nav
+    margin : 0
+
+.m__btn-box
+    margin : 0
+
+.m__staff-profile
+    margin : 0
+
+.m__sec-title--lv1,
+.m__sec-title--lv1--center,
+.m__sec-title--lv2,
+.m__sec-title--lv2--center,
+.m__sec-title--lv3,
+.m__sec-title--lv3--center
+    margin : 0
+
+.m__text,
+.m__text--center,
+.m__text--right
+    margin : 0
+
+.m__title-caption,
+.m__title-caption--center
+    margin : 0
+
+// =============================================================================
+// 全ページ共通
+//
+
+.m__anchor-nav
+    margin : -1.5em $margin-small-l 0
+
+body
+    padding-top : 50px
+body.has-sub-nav
+    padding-top : 100px

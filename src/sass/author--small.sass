@@ -1,0 +1,31 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+.f__main
+    .m__page-title
+        background-image : image-url('author/page-title.jpg')
+
+// =============================================================================
+// プロフィール
+.b__profile
+    box-sizing : border-box
+    padding    : 0 $margin-small-l
+    padding-top : 2em
+    .m__staff-profile
+        padding-top : 2em
+    .m__btn-box
+        padding-top : 1em
+
+// =============================================================================
+// イベント
+.b__event
+    padding-top : 2em
+    .m__sec-title--lv1--center
+        padding : 0 $margin-small-l
+    .m__thumbnail-list
+        padding-top : 2em
+    > .more
+        padding : 0 $margin-small-l
+        padding-top : 1em

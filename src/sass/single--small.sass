@@ -1,0 +1,361 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+@import "mixin/text"
+@import "mixin/table"
+
+@import "module/article--small"
+
+// =============================================================================
+//
+// 共通スタイル
+//
+.s__relation-posts-set
+    margin-top : 2em
+    padding    : 0 $margin-small-s
+    &[data-use-slider="true"]
+        padding-left  : 0
+        padding-right : 0
+        .more-btn
+            padding : 0 $margin-small-s
+
+.s__person-data
+    margin-top : 2em
+
+.s__area-data
+    margin-top : 2em
+
+.s__spot-data
+    margin-top : 2em
+
+.s__calendar-set
+    margin-top : 2em
+
+.m__post-protect
+    padding    : 0 $margin-small-s
+    margin-top : 2em
+// =============================================================================
+//
+// イベント詳細ページ
+//
+body.single-event-post
+    // -------------------------------------------------------------------------
+    .m__media-page-title
+        background-image : image-url('single/event/page-title.jpg')
+    // -------------------------------------------------------------------------
+    // イベント情報
+    //
+    .b__event-info
+        padding-top : 2em
+        .p__event-title
+            padding    : 0 $margin-small-s
+            text-align : center
+            // 開催日時
+            time
+                display       : block
+                margin-bottom : 0.6em
+                font-family   : 'Cardo', serif
+                font-size     : 28px
+                color         : $link-color
+                line-height   : 1
+            // キャッチコピー
+            h3
+                margin-bottom : 0.2em
+                font-family   : $mincho-sp
+                font-size     : 18px
+                line-height   : 1.5
+            // タイトル
+            h2
+                line-height : 1.4
+                font-family : $mincho-sp
+                font-size   : 28px
+            // 定員と受付締切日
+            .limit
+                margin-top : 1em
+                border     : 1px solid $point-color
+                box-sizing : border-box
+                li
+                    display     : block
+                    font-weight : bold
+                    font-family : $mincho-sp
+                    font-size   : 16px
+                    padding     : 0.5em
+                    line-height : 1
+                li.capacity
+                    background : $point-color
+                    color      : #FFF
+                li.deadline
+                    background : #FFF
+                    color      : $point-color
+            // イベントカテゴリー
+            .cat
+                text-align  : center
+                margin-top  : -0.5em
+                font-size   : 12px
+                padding-top : 1.6em
+                li
+                    display     : inline-block
+                    color       : #FFF
+                    line-height : 1
+                    background  : $link-color
+                    padding     : 0.5em
+                    margin      : 0.5em 0.25em 0  0.25em
+
+        // 画像、見どころ
+        .l__text-bg--img-top
+            margin-top : 2em
+            .img
+                img
+                    width : 100%
+            div.text > div
+                padding : $margin-small-l
+                .m__sec-title--lv2
+                    margin-bottom : 1em
+                p
+                    line-height           : 1.8
+                    font-size             : $base-font-size-l
+                    text-align            : justify
+                    font-feature-settings : 'palt'
+
+        // 概要
+        .l__col--1-narrow
+            padding-top : 2em
+            .m__sec-title--lv2--center
+                margin-bottom  : 0.5em
+                letter-spacing : 0.5em
+
+    // -------------------------------------------------------------------------
+    // お問い合わせ・お申し込み
+    //
+    .b__entry
+        margin-top : 2em
+        background : #FFF
+        padding    : 2em $margin-small-l
+        *[data-type="culture-center-announce"]
+            margin-top : 1em
+        *[data-type="contact"]
+            margin-top : 1.5em
+            background : $base-color
+            padding    : 0.9em
+            b
+                font-size : 16px
+        *[data-type="closed"]
+            margin-top : 1em
+
+    // -------------------------------------------------------------------------
+    // 詳細、補足
+    //
+    .b__detail
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+        .p__news-cnt
+            padding-bottom : 1.5em
+            p
+                line-height : 1.6
+            p + p
+                margin-top : 1.2em
+        // .m__btn-box
+
+// =============================================================================
+//
+// 外部イベント詳細ページ
+//
+body.single-ext-event-post
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+    // 詳細
+    .p__detail
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+        > div
+            background : #FFF
+            box-sizing : border-box
+            padding    : 30px
+            dl
+                +text-style--small
+                dt
+                    font-weight : bold
+            div.link
+                padding-top : 1em
+                .text
+                    font-size     : 14px
+                    font-family   : $mincho
+                    font-weight   : bold
+                    text-align    : center
+                    line-height   : 1.6
+                    margin-bottom : 1em
+                .link
+                    text-align : center
+                    a
+                        color : $link-color
+
+
+// =============================================================================
+//
+// 特集詳細ページ
+//
+body.single-special-post
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+// =============================================================================
+//
+// 連載詳細ページ
+//
+body.single-serialization-post
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+// =============================================================================
+//
+// 詳細詳細ページ
+//
+body.single-detail-post
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+// =============================================================================
+//
+// スタッフブログ詳細ページ
+//
+body.single-staff-blog-post
+
+    // エディターコンテンツ
+    .p__editor-content
+        +article-content-style
+        padding : 2em $margin-small-s 0 $margin-small-s
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+    // 記事情報
+    .p__article-data
+        @extend .m__article
+        .column
+            padding-top : 1em
+            table
+                width      : 100%
+                border-top : 1px solid #d1cdbf
+                tbody
+                    display : block
+                    tr
+                        display : block
+                tbody tr th
+                    display        : block
+                    box-sizing     : border-box
+                    word-wrap      : break-all
+                    border-bottom  : none
+                    border-top     : none
+                    padding-bottom : 0
+                    font-weight    : bold
+                tbody tr td
+                    display     : block
+                    box-sizing  : border-box
+                    word-wrap   : break-all
+                    border-top  : none
+                    padding-top : 0
+            // 著者
+            tr.author
+                dl
+                    display     : flex
+                    align-items : center
+                    dd
+                        width        : 50px
+                        margin-right : 0.5em
+                        img
+                            width : 100%
+            // 専用カテゴリー
+            tr.cat
+                ul
+                    +clearfix
+                    li
+                        float : left
+                        &:after
+                            content : '/'
+                            margin  : 0 0.5em
+                        &:last-child:after
+                            display : none
+                        span
+                            display : inline-block
+                            margin  : 0 0.5em
+
+// =============================================================================
+//
+// おすすめコース詳細ページ
+//
+body.single-course-post
+
+    // コンテンツセット
+    .m__article
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+
+
+// =============================================================================
+//
+// 書籍詳細ページ
+//
+body.single-book-post
+
+    // ページキャッチ
+    .m__media-page-title
+        background-image : image-url('single/book/page-title.jpg')
+
+    // コンテンツ
+    .p__book-detail
+        font-size  : $base-font-size-s
+        margin-top : 2em
+        padding    : 0 $margin-small-s
+        > p.thumb
+            display    : block
+            text-align : center
+            img
+                width : 100%
+        > div.cnt
+            box-sizing  : border-box
+            padding-top : 1em
+            .title
+                font-size   : 18px
+                line-height : 1.5
+                font-family : $mincho-sp
+                margin-top  : -0.2em
+            > table
+                +table-style--small
+                margin-top : 1em
+                width      : 100%
+                > tbody > tr
+                    th
+                        width : 30%
+                    &.page-and-price-grp
+                        ul
+                            letter-spacing : -0.4em
+                            li
+                                letter-spacing : normal
+                                display        : inline-block
+                                &:after
+                                    content : '/'
+                                    margin  : 0 0.5em
+                                &:last-child:after
+                                    content : ''
+            .description
+                +text-style--small
+                margin-top : 1em
+            .link
+                margin-top : 1em

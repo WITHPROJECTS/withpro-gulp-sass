@@ -1,0 +1,111 @@
+.m__book-set
+    font-size : $base-font-size-s
+
+    ul.set
+        margin-top : -1em
+        > li
+            padding-top : 1em
+
+    .cnt-wrap
+        box-sizing : border-box
+        +clearfix
+        > .thumb
+            float         : left
+            width         : 40%
+            display       : block
+            box-sizing    : border-box
+            padding-right : 1em
+            .img-wrap
+                display        : block
+                padding-bottom : $margin-small-s
+                img
+                    width : 100%
+            .text
+                color       : #FFF
+                background  : $link-color
+                padding     : 0.5em
+                text-align  : center
+                display     : block
+                font-size   : 11px
+                line-height : 1
+        > .cnt
+            float : left
+            width : 60%
+            > .title
+                font-family           : $mincho-sp
+                font-size             : 16px
+                line-height           : 1.4
+                margin-top            : -0.1em
+                font-feature-settings : 'palt'
+                letter-spacing        : 0.05em
+            > dl
+                width       : 100%
+                font-size   : 12px
+                line-height : 1.6
+                position    : relative
+                +clearfix
+                dt
+                    float : left
+                    clear : left
+                    &:after
+                        content : '：'
+                dd
+                    padding-left : 3em
+                    box-sizing   : border-box
+                    a
+                        color : $link-color
+            > .title + dl
+                margin-top : 0.5em
+            > .excerpt
+                border-top  : 1px solid $link-color
+                clear       : left
+                padding-top : 0.8em
+                margin-top  : 0.8em
+                text-align  : justify
+                font-size   : 12px
+                line-height : 1.6
+
+
+// =============================================================================
+// スライダー版
+//
+.m__book-set--slider
+    @extend .m__book-set
+    ul.set
+        margin-top : 0
+        li
+            padding-top : 0
+
+    // bxSlider
+    .cnt-wrap
+        padding : 0 $margin-small-l + $margin-small-s
+    .bx-wrapper
+        // background : #cfccbf
+        position   : relative
+        .bx-viewport
+            z-index : 100
+        .bx-controls
+            position : absolute
+            top      : 0
+            left     : 0
+            width    : 100%
+            height   : 100%
+            .bx-controls-direction
+                a
+                    z-index         : 200
+                    position        : absolute
+                    height          : 60px
+                    background      : $gray-80-color
+                    display         : flex
+                    width           : 25px
+                    top             : 50%
+                    margin-top      : -30px
+                    justify-content : center
+                    align-items     : center
+                    i
+                        color : $link-color
+                        font-size : 16px
+                .bx-prev
+                    left : 0
+                .bx-next
+                    right : 0

@@ -1,0 +1,91 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+@import "mixin/text"
+@import "mixin/table"
+
+// =============================================================================
+// 日付移動ナビ
+//
+.p__date-nav
+    $h : 50px
+    font-size       : $base-font-size-s
+    display         : flex
+    line-height     : 1
+    align-content   : stretch
+    justify-content : space-between
+    height : $h
+    p.prev
+        line-height : 0
+        a
+            display     : block
+            height      : 100%
+            color       : $link-color
+            line-height : $h
+            font-size   : 28px
+            background  : $text-color
+            padding     : 0 0.5em
+    p.next
+        line-height : 0
+        a
+            display     : block
+            height      : 100%
+            color       : $link-color
+            line-height : $h
+            font-size   : 28px
+            background  : $text-color
+            padding     : 0 0.5em
+    .date
+        font-size   : 28px
+        font-family : $mincho-sp
+        line-height : $h
+
+// =============================================================================
+// 記事が見つからない
+//
+.p__article-not-found
+    font-size : $base-font-size-s
+    > div
+        background : #FFF
+        box-sizing : border-box
+        padding    : 30px
+        text-align : center
+        p
+            +text-style--small
+            font-size   : 16px
+            font-family : $mincho-sp
+
+// =============================================================================
+// ページ画像の変更
+//
+.m__media-page-title
+    background-image : image-url('page/date/page-title.jpg')
+
+// =============================================================================
+// 幅、余白の設定
+//
+.p__date-nav
+    padding : 2em $margin-small-s 0 $margin-small-s
+
+.p__article-not-found
+    padding : 2em $margin-small-s 0 $margin-small-s
+
+
+.b__list
+    padding : 2em $margin-small-s 0 $margin-small-s
+
+    .m__thumbnail-list
+        padding-top  : 1em
+        width        : auto
+        margin-left  : $margin-small-s * -1
+        margin-right : $margin-small-s * -1
+
+    .m__card-set
+        padding-top : 1em
+
+    // もっと見るボタン
+    .more
+        padding-top : 1em
+        display     : block

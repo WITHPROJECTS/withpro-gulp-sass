@@ -1,5 +1,6 @@
 const notifier = require('node-notifier');
 const path     = require('path');
+const cached   = require('gulp-cached');
 
 
 let options = {};
@@ -47,6 +48,7 @@ options['plumber'] = {
     'sound'        : 'Pop',
     'errorHandler' : function(err) {
         if ( err ) {
+            if ( cached.caches['sass'] ) cached.caches['sass'] = {};
             console.error(err.message);
             notifier.notify({
                 'title'   : `Sass ${err.name}`,

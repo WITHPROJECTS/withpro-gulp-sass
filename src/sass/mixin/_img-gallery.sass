@@ -1,0 +1,109 @@
+@mixin img-gallery--large
+    *[data-gallery="active"]
+        margin-bottom : 12px
+        img
+            width : 100%
+    *[data-gallery="thumb-set"]
+        > ul
+            margin-left : -12px
+            margin-top  : -12px
+            +clearfix
+            li
+                float        : left
+                padding-left : 12px
+                padding-top  : 12px
+                box-sizing   : border-box
+                width        : 16.6666%
+                img
+                    width : 100%
+        // bxSlider
+        .bx-wrapper
+            position : relative
+            width    : 100%
+            height   : auto
+            .bx-viewport
+                // width    : 80% !important
+                margin     : 0 auto
+                position   : relative
+                z-index    : 100
+                padding    : 0 62px
+                box-sizing : border-box
+                img
+                    width : 100%
+            .bx-controls
+                position : absolute
+                top      : 0
+                left     : 0
+                width    : 100%
+                height   : 100%
+                .bx-controls-direction a
+                    z-index         : 200
+                    position        : absolute
+                    height          : 100%
+                    background      : $gray-80-color
+                    width           : 50px
+                    overflow        : hidden
+                    text-align      : center
+                    display         : flex
+                    justify-content : center
+                    align-items     : center
+                    i
+                        color     : $link-color
+                        font-size : 40px
+                    &.bx-prev
+                        left : 0
+                    &.bx-next
+                        right : 0
+
+@mixin img-gallery--small
+    *[data-gallery="active"]
+        margin-bottom : 6px
+        img
+            width : 100%
+    *[data-gallery="thumb-set"]
+        > ul
+            margin-top  : -6px
+            margin-left : -6px
+            +clearfix
+            li
+                float        : left
+                width        : 33.3333%
+                box-sizing   : border-box
+                padding-left : 6px
+                padding-top  : 6px
+                img
+                    width : 100%
+        // bxSlider
+        .bx-wrapper
+            position : relative
+            width    : 100%
+            .bx-viewport
+                margin   : 0 auto
+                position : relative
+                z-index  : 100
+                padding  : 0 30px
+                box-sizing : border-box
+            .bx-controls
+                position : absolute
+                top      : 0
+                left     : 0
+                width    : 100%
+                height   : 100%
+                .bx-controls-direction a
+                    z-index         : 200
+                    position        : absolute
+                    height          : 100%
+                    background      : $gray-80-color
+                    width           : 25px
+                    overflow        : hidden
+                    text-align      : center
+                    display         : flex
+                    justify-content : center
+                    align-items     : center
+                    i
+                        color     : $link-color
+                        font-size : 20px
+                    &.bx-prev
+                        left : 0
+                    &.bx-next
+                        right : 0

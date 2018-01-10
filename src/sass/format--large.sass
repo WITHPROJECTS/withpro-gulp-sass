@@ -1,0 +1,36 @@
+// 子テーマであり、共通CSSは親テーマから読んでいるので
+// ここではリセットCSSは読まない
+
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+// =============================================================================
+//
+// 親のスタイル修正
+//
+// コーディング規約違反の修正
+// - todo : 親テーマのスタイル修正は松井さんにやってもらう 17/10/19
+
+.m__anchor-nav
+    width  : auto
+    margin : 0
+    // width : $content-w
+    // margin : -2.5em auto 0
+
+// =============================================================================
+// 全ページ共通
+//
+.m__anchor-nav
+    width  : $content-w
+    margin : -2.5em auto 0
+
+body .m__pan-anchor-nav
+    width  : $content-w
+    margin : -2.5em auto 0
+
+body
+    padding-top : 57px
+body.has-sub-nav
+    padding-top : 107px

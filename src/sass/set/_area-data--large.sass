@@ -1,0 +1,161 @@
+.s__area-data
+    font-size : $base-font-size-l
+    overflow  : hidden
+    width     : 100%
+
+    // =========================================================================
+    //
+    // タブ
+    //
+    nav.tab
+        height     : 70px
+        overflow-y : hidden
+        > div
+            overflow-x : scroll
+            ul
+                display     : flex
+                align-items : flex-end
+                li
+                    margin-right : 4px
+                    // &:first-child
+                        // padding-left : 15px
+                    a
+                        color       : #FFF
+                        display     : flex
+                        align-items : center
+                        height      : 60px
+                        font-size   : 16px
+                        font-weight : bold
+                        // padding     : 0 1em 0 0.5em
+                        padding     : 0 1em
+                        flex-wrap   : nowrap
+                        white-space : nowrap
+                        &.tab-active,
+                        &:hover
+                            height : 70px
+                        // span
+                        //     width         : 50px
+                        //     height        : 50px
+                        //     border-radius : 50px
+                        //     overflow      : hidden
+                        //     position      : relative
+                        //     margin-right  : 0.5em
+                        //     img
+                        //         position  : absolute
+                        //         margin    : auto
+                        //         top       : -100%
+                        //         right     : -100%
+                        //         bottom    : -100%
+                        //         left      : -100%
+                        //         max-width : 120%
+                        &:hover
+                            opacity : 1
+                li:nth-child(odd) a
+                    background : #826321
+                    &.tab-active,
+                    &:hover
+                        background : #000
+                li:nth-child(even) a
+                    background : #a68c53
+                    &.tab-active,
+                    &:hover
+                        background : #000
+    // =========================================================================
+    //
+    // コンテンツコンテナ
+    //
+    div.container
+        background     : #FFF
+        border-top     : 2px solid #000
+        padding-top    : 4em
+        padding-bottom : 4em
+
+        // コンテンツ
+        > .cnt
+            display   : none
+            flex-wrap : wrap
+            &.tab-active
+                display : flex
+            > div
+                width      : 50%
+                box-sizing : border-box
+                &.left
+                    padding-right : $margin-large-s
+                    flex-grow     : 1
+                &.right
+                    padding-left : $margin-large-s
+                    &:empty
+                        display : none
+
+                // サムネイルや説明文
+                .base-data
+                    +clearfix
+                    > img.thumb
+                        float        : left
+                        width        : 200px
+                        margin-right : 18px
+                    > header
+                        .name
+                            font-family : $mincho
+                            font-size   : 24px
+                        ul
+                            margin-top     : -0.5em
+                            padding-top    : 1em
+                            letter-spacing : -0.4em
+                            li
+                                display        : inline-block
+                                letter-spacing : normal
+                                font-size      : 12px
+                                padding-right  : 1em
+                    > div
+                        margin-top : 1.3em
+                        p
+                            line-height           : 1.7
+                            font-size             : 14px
+                            font-feature-settings : "palt"
+                            text-align            : justify
+                        p + p
+                            margin-top : 1.3em
+
+                > .unit
+                    margin-top : 2em
+                    .title
+                        font-weight   : bold
+                        font-size     : 18px
+                        line-height   : 1
+                    table
+                        +table-style--large
+                        width : 100%
+                        th,td
+                            font-size : 14px
+                        th
+                            font-weight : bold
+                            width       : 35%
+                        tbody
+                            tr:nth-child(odd)
+                                th
+                                    background : #f2f1ed
+                                td
+                                    background : #FFF
+                            tr:nth-child(even)
+                                th
+                                    background : #e6e4dc
+                                td
+                                    background : #f2f1ed
+                    .title + table
+                        margin-top : 0.5em
+                    table + table
+                        margin-top : 2em
+
+            > .relation
+                // width      : $content-w
+                // margin     : 0 auto
+                width       : 100%
+                clear       : both
+                padding-top : 2em
+                .title
+                    text-align    : center
+                    font-family   : $mincho
+                    line-height   : 1
+                    font-size     : 36px
+                    margin-bottom : 0.8em

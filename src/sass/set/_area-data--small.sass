@@ -1,0 +1,148 @@
+.s__area-data
+    font-size : $base-font-size-s
+    overflow  : hidden
+    width     : 100%
+
+    // =========================================================================
+    //
+    // タブ
+    //
+    nav.tab
+        height     : 45px
+        overflow-y : hidden
+        > div
+            width                      : 100%
+            -webkit-overflow-scrolling : touch
+            overflow-x                 : scroll
+            padding-bottom             : 20px
+            ul
+                display     : flex
+                align-items : flex-end
+                li
+                    margin-right : 4px
+                    // &:first-child
+                        // padding-left : 15px
+                    a
+                        color       : #FFF
+                        display     : flex
+                        align-items : center
+                        height      : 40px
+                        font-size   : 11px
+                        font-weight : bold
+                        padding     : 0 1em 0 0.5em
+                        flex-wrap   : nowrap
+                        white-space : nowrap
+                        &.tab-active
+                            height : 45px
+                        span
+                            width         : 35px
+                            height        : 35px
+                            border-radius : 35px
+                            overflow      : hidden
+                            position      : relative
+                            margin-right  : 0.5em
+                            img
+                                position  : absolute
+                                margin    : auto
+                                top       : -100%
+                                right     : -100%
+                                bottom    : -100%
+                                left      : -100%
+                                max-width : 120%
+                        &:hover
+                            opacity : 1
+                li:nth-child(odd) a
+                    background : #826321
+                    &.tab-active
+                        background : #000
+                li:nth-child(even) a
+                    background : #a68c53
+                    &.tab-active
+                        background : #000
+
+    // =========================================================================
+    //
+    // コンテンツコンテナ
+    //
+    div.container
+        background     : #FFF
+        border-top     : 2px solid #000
+        padding-top    : 2em
+        padding-bottom : 2em
+
+        // コンテンツ
+        > .cnt
+            display : none
+            &.tab-active
+                display : block
+            > div
+                &.left
+                    padding : 0 $margin-small-s
+                &.right
+                    margin-top : 1em
+                    padding    : 0 $margin-small-s
+
+                // サムネイルや説明文
+                .base-data
+                    +clearfix
+                    // サムネイル
+                    > img.thumb
+                        float        : left
+                        width        : 40%
+                        margin-right : 10px
+                        float        : left
+                    > header
+                        .name
+                            font-family : $mincho
+                            font-size   : 21px
+                            line-height : 1.4
+                            position    : relative
+                            top         : -0.15em
+                    > div
+                        margin-top : -0.3em
+                        p
+                            line-height           : 1.7
+                            font-size             : 14px
+                            font-feature-settings : "palt"
+                            text-align            : justify
+                            margin-top            : 0.7em
+
+                > .unit
+                    margin-top : 1em
+                    .title
+                        font-weight : bold
+                        font-size   : 18px
+                        line-height : 1
+                        padding     : 0 $margin-small-s
+                    table
+                        +table-style--small
+                        width : 100%
+                        th,td
+                            font-size : 14px
+                        th
+                            font-weight : bold
+                        tbody
+                            tr:nth-child(odd)
+                                th
+                                    background : #f2f1ed
+                                td
+                                    background : #FFF
+                            tr:nth-child(even)
+                                th
+                                    background : #e6e4dc
+                                td
+                                    background : #f2f1ed
+                    .title + table
+                        margin-top : 0.5em
+                    table + table
+                        margin-top : 1em
+
+            > .relation
+                clear      : both
+                margin-top : 2em
+                .title
+                    text-align    : center
+                    font-family   : $mincho
+                    line-height   : 1
+                    font-size     : 21px
+                    margin-bottom : 0.6em

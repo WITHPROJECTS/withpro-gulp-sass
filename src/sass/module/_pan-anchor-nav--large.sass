@@ -1,0 +1,60 @@
+.m__pan-anchor-nav
+    $h        : 70px
+    font-size : $base-font-size-l
+    box-sizing : border-box
+    // padding    : 1.88em 1em
+    text-align : center
+    background : $sub-base-color
+    width      : 100%
+    overflow   : hidden
+    height     : $h
+    > div
+        width                      : 100%
+        height                     : $h + 30
+        position                   : relative
+        overflow-x                 : scroll
+        text-align                 : center
+        -webkit-overflow-scrolling : touch
+        box-sizing                 : border-box
+        ul
+            display     : inline-block
+            white-space : nowrap
+            height      : $h
+            cursor      : move
+            padding     : 0 $margin-large-s / 2
+        li
+            display : table-cell
+            // display : inline-block
+            padding : 0 $margin-large-s / 2
+
+            user-select         : none
+            -webkit-user-select : none
+            -ms-user-select     : none
+            -moz-user-select    : none
+            -webkit-user-drag   : none
+            &:first-child
+                padding-left : 0
+            a
+                display     : block
+                padding     : 0 $margin-large-s
+                font-family : $mincho
+                font-size   : 15px
+                height      : $h
+                line-height : $h
+                background : image-url('module/pan-anchor-nav/arrow.png') right center no-repeat
+
+.m__pan-anchor-nav.anchor-animate > div ul
+    transform : translateX(-100%)
+    opacity   : 0
+
+body.dom-ready .m__pan-anchor-nav.anchor-animate > div ul
+    @keyframes swipe
+        0%
+            transform : translateX(-100%)
+            opacity   : 0
+        50%
+            opacity   : 1
+        100%
+            transform : translateX(0)
+            opacity   : 1
+    animation : swipe 1.5s 1s ease-out forwards

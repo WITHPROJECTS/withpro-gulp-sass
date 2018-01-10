@@ -1,0 +1,117 @@
+.m__thumbnail-list
+    font-size : $base-font-size-s
+    width      : 100%
+    margin-top : -1em
+    // display    : flex
+    // flex-wrap  : wrap
+    > li
+        width      : 100%
+        margin-top : 1em
+        box-sizing : border-box
+        > a
+            display : block
+
+    // -------------------------------------------------------------------------
+    // サムネイル
+    //
+    .thumb
+        position   : relative
+        width      : 100%
+        display    : block
+        overflow   : hidden
+        background : #CCC
+        &:after
+            content     : ''
+            display     : block
+            padding-top : 65%
+            position    : relative
+        img
+            position  : absolute
+            width     : 100%
+            height    : auto
+            top       : -100%
+            bottom    : -100%
+            left      : -100%
+            right     : -100%
+            margin    : auto
+
+    // -------------------------------------------------------------------------
+    // コンテンツ
+    //
+    .cnt
+        position : relative
+        display  : inline-block
+        width    : 100%
+        margin   : -50px auto 0
+        > div
+            box-sizing : border-box
+            padding : 0 $margin-small-s $margin-small-s
+            margin : 0 $margin-small-s
+            background : $sub-base-color
+        // ターム
+        .term
+            letter-spacing : -0.4em
+            line-height    : 0
+            li
+                letter-spacing : normal
+                display        : inline-block
+                line-height    : 1em
+                font-size      : 10px
+                margin         : 0 0.5em
+                padding        : 0.3em 0.5em
+                color          : $sub-base-color
+                background     : $link-color
+                &:first-child
+                    margin-left : 0
+        .tax
+            display       : flex
+            flex-wrap     : wrap
+            position      : relative
+            margin-left   : -1px
+            top           : -1px
+            margin-bottom : -1px
+            // margin-top    : -1px
+            // margin-bottom : 0.4em
+            li
+                margin-left : 1px
+                margin-top  : 1px
+                > div, > a, > span
+                    display               : block
+                    background            : $link-color
+                    color                 : #FFF
+                    font-size             : 10px
+                    line-height           : 1
+                    padding               : 0.4em 0.5em
+                    font-feature-settings : 'palt'
+                > div a
+                    color : #FFF
+        // 開催日時
+        time
+            display     : block
+            font-family : $en-font
+            font-size   : 22px
+            color       : $link-color
+            line-height : 1
+            padding     : 0.3em 0 0.2em 0
+            span
+                font-family : $mincho-sp
+                font-size   : 18px
+            span.d__color--red
+                font-size : 16px
+            // 先頭の要素の場合
+            &:first-child
+                padding-top : 0.5em
+        // キャッチ
+        .catch
+            font-size             : 12px
+            line-height           : 1.4
+            font-feature-settings : 'palt'
+            margin-bottom         : 0.1em
+        // タイトル
+        .title
+            font-family           : $mincho-sp
+            font-size             : 16px
+            line-height           : 1.4
+            font-feature-settings : 'palt'
+        time + .title
+            margin-top : -0.2em

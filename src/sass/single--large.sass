@@ -1,0 +1,399 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+@import "mixin/text"
+@import "mixin/table"
+
+@import "module/article--large"
+
+// =============================================================================
+//
+// 共通スタイル
+//
+.s__relation-posts-set
+    margin     : 0 auto
+    margin-top : 4em
+    width      : $content-w
+    &[data-use-slider="true"]
+        width : 100%
+
+.s__person-data
+    margin-top : 4em
+    > div
+        > .tab *[data-anchor="scroller"]
+            padding-left : calc( 50% - #{$content-w / 2} )
+        >.container > .cnt
+            width        : $content-w
+            margin-left  : auto
+            margin-right : auto
+
+.s__area-data
+    margin-top : 4em
+    > div
+        > .tab *[data-anchor="scroller"]
+            padding-left : calc( 50% - #{$content-w / 2} )
+        >.container > .cnt
+            width        : $content-w
+            margin-left  : auto
+            margin-right : auto
+
+.s__spot-data
+    margin-top : 4em
+    > div
+        > .tab *[data-anchor="scroller"]
+            padding-left : calc( 50% - #{$content-w / 2} )
+        >.container > .cnt
+            width        : $content-w
+            margin-left  : auto
+            margin-right : auto
+
+.s__calendar-set
+    margin-top : 4em
+    .m__calender
+        width  : $content-w
+        margin : 0 auto
+
+.m__post-protect
+    width      : 600px
+    margin     : 0 auto
+    margin-top : 4em
+
+// =============================================================================
+//
+// イベント詳細ページ
+//
+body.single-event-post
+    // -------------------------------------------------------------------------
+    .m__media-page-title
+        background-image : image-url('single/event/page-title.jpg')
+    // -------------------------------------------------------------------------
+    // イベント情報
+    //
+    .b__event-info
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+        // 開催日、タイトル、カテゴリーなど
+        .p__event-title
+            text-align : center
+            // 開催日
+            time
+                display       : block
+                margin-bottom : 0.9em
+                line-height   : 1
+                font-family   : 'Cardo', serif
+                font-size     : 42px
+                color         : $link-color
+                span
+                    font-family : $mincho
+                    font-size   : 24px
+            // キャッチコピー
+            h3
+                font-family           : $mincho
+                font-size             : 20px
+                line-height           : 1.6
+                margin-bottom         : 0.2em
+                font-feature-settings : 'palt'
+            // タイトル
+            h2
+                line-height           : 1.4
+                font-family           : $mincho
+                font-size             : 42px
+                font-feature-settings : 'palt'
+            // 制限
+            .limit
+                display        : inline-block
+                margin-top     : 1em
+                border         : 1px solid $point-color
+                box-sizing     : border-box
+                letter-spacing : -0.4em
+                li
+                    letter-spacing : normal
+                    display        : inline-block
+                    font-size      : 18px
+                    font-family    : $mincho
+                    padding        : 0.5em 1em
+                    font-weight    : bold
+                // 定員
+                li.capacity
+                    background : $point-color
+                    color      : #FFF
+                // 受付締切
+                li.deadline
+                    background : #FFF
+                    color      : $point-color
+            // イベントカテゴリー
+            .cat
+                text-align  : center
+                margin-top  : -0.5em
+                font-size   : $base-font-size-l
+                padding-top : 1.6em
+                li
+                    display     : inline-block
+                    color       : #FFF
+                    line-height : 1
+                    background  : $link-color
+                    padding     : 0.5em
+                    margin      : 0.5em 0.25em 0  0.25em
+
+        // 画像、見どころ
+        .l__text-bg--img-top
+            padding-top : 4em
+            div.text > div
+                padding : 40px
+                .m__sec-title--lv2
+                    margin-bottom : 0.8em
+                p
+                    line-height           : 1.8
+                    font-size             : $base-font-size-l
+                    text-align            : justify
+                    font-feature-settings : 'palt'
+
+        // 概要
+        .l__col--1-narrow
+            padding-top : 4em
+            .m__sec-title--lv2--center
+                margin-bottom  : 1em
+                letter-spacing : 0.5em
+                line-height    : 1
+
+    // -------------------------------------------------------------------------
+    // お問い合わせ・お申し込み
+    //
+    .b__entry
+        width      : $content-w--middle
+        background : #FFF
+        margin     : 0 auto
+        margin-top : 4em
+        padding    : 60px
+        box-sizing : border-box
+        *[data-type="culture-center-announce"]
+            margin-top : 1em
+        *[data-type="contact"]
+            margin-top : 1.5em
+            background : $base-color
+            padding    : 0.9em
+            b
+                font-size : 20px
+        *[data-type="closed"]
+            margin-top : 1.5em
+
+    // -------------------------------------------------------------------------
+    // 詳細、補足
+    //
+    .b__detail
+        width      : $col-1-w
+        margin     : 0 auto
+        margin-top : 4em
+        .p__news-cnt
+            padding-bottom : 1.5em
+            p
+                line-height : 2
+            p + p
+                margin-top : 1.2em
+        .m__btn-box
+
+// =============================================================================
+//
+// 外部イベント詳細ページ
+//
+body.single-ext-event-post
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+    // 詳細
+    .p__detail
+        width      : $content-w--middle
+        margin     : 0 auto
+        margin-top : 4em
+        > div
+            background : #FFF
+            box-sizing : border-box
+            padding    : 60px
+            dl
+                +text-style--large
+                font-size : 18px
+                +clearfix
+                dt
+                    float : left
+                    clear : left
+                dd
+                    padding-left : 130px
+            div.link
+                padding-top : 2em
+                .text
+                    font-size     : 16px
+                    font-family   : $mincho
+                    font-weight   : bold
+                    text-align    : center
+                    line-height   : 1.6
+                    margin-bottom : 1em
+                .link
+                    text-align : center
+                    a
+                        color : $link-color
+
+// =============================================================================
+//
+// 特集詳細ページ
+//
+body.single-special-post
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+// =============================================================================
+//
+// 連載詳細ページ
+//
+body.single-serialization-post
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+// =============================================================================
+//
+// スタッフブログ詳細ページ
+//
+body.single-staff-blog-post
+
+    // エディターコンテンツ
+    .p__editor-content
+        +article-content-style
+        padding-top : 0
+        width       : $content-w--middle
+        margin      : 4em auto 0 auto
+        > *:first-child
+            margin-top  : 0
+            padding-top : 0
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+    // 記事情報
+    .p__article-data
+        @extend .m__article
+        .column
+            table
+                tbody tr th, tbody tr td
+                    vertical-align : middle
+                th
+                    width : 20%
+            // 著者
+            tr.author
+                dl
+                    display     : flex
+                    align-items : center
+                    dd
+                        width        : 50px
+                        margin-right : 0.5em
+                        img
+                            width : 100%
+            // 専用カテゴリー
+            tr.cat
+                ul
+                    letter-spacing : -0.4em
+                    li
+                        letter-spacing : normal
+                        display        : inline-block
+                        &:after
+                            content : '/'
+                            margin  : 0 0.5em
+                        &:last-child:after
+                            display : none
+                        span
+                            display : inline-block
+                            margin  : 0 0.5em
+
+// =============================================================================
+//
+// 詳細記事ページ
+//
+body.single-detail-post
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+// =============================================================================
+//
+// おすすめコース詳細ページ
+//
+body.single-course-post
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+
+// =============================================================================
+//
+// 書籍詳細ページ
+//
+body.single-book-post
+
+    // ページキャッチ
+    .m__media-page-title
+        background-image : image-url('single/book/page-title.jpg')
+
+    // コンテンツ
+    .p__book-detail
+        font-size  : $base-font-size-l
+        width      : $content-w--middle
+        margin     : 0 auto
+        margin-top : 4em
+        display    : flex
+        > p.thumb
+            width : 35%
+            img
+                width : 100%
+        > div.cnt
+            width        : 65%
+            box-sizing   : border-box
+            padding-left : $margin-large-s * 2
+            .title
+                font-size   : 24px
+                line-height : 1.5
+                font-family : $mincho
+                margin-top  : -0.2em
+            > table
+                margin-top : 2em
+                +table-style--large
+                > tbody > tr
+                    th
+                        width : 30%
+                    &.page-and-price-grp
+                        ul
+                            letter-spacing : -0.4em
+                            li
+                                letter-spacing : normal
+                                display        : inline-block
+                                &:after
+                                    content : '/'
+                                    margin  : 0 0.5em
+                                &:last-child:after
+                                    content : ''
+            .description
+                +text-style--large
+                margin-top : 2em
+            .link
+                margin-top : 2em

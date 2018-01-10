@@ -1,0 +1,219 @@
+@import "bourbon/bourbon"
+@import "helper-extends"
+@import "helper-mixins"
+@import "variables"
+
+
+// =============================================================================
+//
+// 共通スタイル
+//
+.b__list
+    width  : $content-w
+    margin : 0 auto
+
+// -----------------------------------------------------------------------------
+// イベント投稿アーカイブ
+//
+body.post-type-archive-event-post
+    // ページキャッチ
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // イントロ
+    .b__intro
+        margin-top : 4em
+
+    // セクション
+    .b__list
+        padding-top : 4em
+        .m__thumbnail-list
+            padding-top : 2em
+        .more
+            margin     : 0 auto
+            margin-top : 2em
+            width      : $col-1-w
+
+// -----------------------------------------------------------------------------
+// 書籍投稿アーカイブ
+//
+body.post-type-archive-book-post
+    // ページキャッチ
+    .m__media-page-title
+        background-image : image-url('archive/book/page-title.jpg')
+
+    .b__list
+        margin-top : 4em
+        .m__book-set
+            margin-top : 2em
+
+    .b__work-link
+        > p
+            display    : block
+            background : #FFF
+            margin     : 0 auto
+            margin-top : 4em
+            width      : $content-w--middle
+            box-sizing : border-box
+            padding    : 60px
+
+// -----------------------------------------------------------------------------
+// スタッフブログ投稿アーカイブ
+//
+body.post-type-archive-staff-blog-post
+    .m__card-set
+        width      : $content-w
+        margin     : 0 auto
+        margin-top : 4em
+    .m__pagenate
+        width      : $content-w
+        margin     : 0 auto
+        margin-top : 2em
+
+// -----------------------------------------------------------------------------
+// イベント専用カテゴリータクソノミー
+body.tax-event-tax
+    // ページタイトル
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+    // セクション
+    .b__list
+        margin-top : 4em
+        // テキスト表示 / サムネイル表示に切り替えボタン
+        .d__list-mode-btn
+            display    : block
+            text-align : right
+        .m__thumbnail-list
+            padding-top : 2em
+        .m__line-list
+            margin-top : 2em
+        // ページネイト
+        .m__pagenate
+            margin-top : 2em
+        // イベント・講座情報一覧へ
+        .m__btn-box
+            margin     : 0 auto
+            margin-top : 2em
+            width      : $col-1-w
+
+// -----------------------------------------------------------------------------
+// イベント主催/共催タクソノミー
+body.tax-event-host-tax
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // セクション
+    .b__list
+        margin-top : 4em
+        // テキスト表示 / サムネイル表示に切り替えボタン
+        .d__list-mode-btn
+            display    : block
+            text-align : right
+        .m__thumbnail-list
+            padding-top : 2em
+        .m__line-list
+            margin-top : 2em
+
+    // ページネイト
+    .m__pagenate
+        margin-top : 2em
+
+    // イベント・講座情報一覧へ
+    .m__btn-box
+        margin     : 0 auto
+        margin-top : 2em
+        width      : $col-1-w
+
+// -----------------------------------------------------------------------------
+// 目的別タクソノミー
+//
+body.tax-cause-tax
+
+    .m__media-page-title
+        background-image : image-url('taxonomy/cause-tax/page-title.jpg')
+
+    // コンテンツセット
+    .m__article
+        margin     : 0 auto
+        margin-top : 4em
+        width      : $content-w
+        &[data-column="1"] > .column
+            width  : $content-w--middle
+            margin : 0 auto
+
+    // 記事のセット
+    .b__list
+        margin-top : 4em
+
+        .m__thumbnail-list
+            padding-top : 2em
+
+        .m__card-set
+            margin-top : 2em
+
+        // もっと見るボタン
+        > .more
+            margin     : 0 auto
+            display    : block
+            width      : $content-w--middle
+            margin-top : 2em
+
+// -----------------------------------------------------------------------------
+// 特集専用カテゴリータクソノミー
+//
+body.tax-special-tax
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // セクション
+    .b__list
+        margin-top : 4em
+
+        // ページネイト
+        .m__pagenate
+            margin-top : 2em
+
+// -----------------------------------------------------------------------------
+// スタッフブログ専用カテゴリータクソノミー
+//
+body.tax-staff-blog-tax
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // セクション
+    .b__list
+        margin-top : 4em
+
+        // ページネイト
+        .m__pagenate
+            margin-top : 2em
+
+// -----------------------------------------------------------------------------
+// 詳細記事専用カテゴリータクソノミー
+//
+body.tax-detail-tax
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // セクション
+    .b__list
+        margin-top : 4em
+
+        // ページネイト
+        .m__pagenate
+            margin-top : 2em
+
+// -----------------------------------------------------------------------------
+// 連載シリーズタクソノミー
+//
+body.tax-serialization-series-tax
+    .m__media-page-title
+        background-image : image-url('archive/event/page-title.jpg')
+
+    // セクション
+    .b__list
+        margin-top : 4em
+
+        // ページネイト
+        .m__pagenate
+            margin-top : 2em

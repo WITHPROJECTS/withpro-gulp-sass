@@ -1,0 +1,154 @@
+div[data-name=article-rep] > .acf-input > .acf-repeater > .acf-table > tbody > tr.acf-row > td.acf-fields
+    display   : flex
+    flex-wrap : wrap
+    width     : 100%
+
+    // =========================================================================
+    //
+    // 記事内容
+    //
+    // セクションセットタイトル
+    div[data-name=content-set-title-group]
+        width : 100%
+        background : #23282d
+        > .acf-label
+            display : none
+
+        // タイトル
+        [data-name="title"]
+            .acf-label
+                display : none
+
+        // サブタイトル
+        [data-name="sub-title"]
+            .acf-label
+                display : none
+
+        // アンカー
+        [data-name="anchor"]
+            .acf-label
+                display : none
+
+    // カラム数
+    div[data-name=column-num]
+        width : 100%
+
+    // カラムコンテンツレイアウト
+    div[data-name=left-column]
+        width       : 25%
+        flex-grow   : 1
+        flex-shrink : 1
+    div[data-name=right-column]
+        width       : 25%
+        flex-grow   : 1
+        flex-shrink : 1
+    div[data-name=left-column-2]
+        width       : 25%
+        flex-grow   : 1
+        flex-shrink : 1
+    div[data-name=right-column-2]
+        width       : 25%
+        flex-grow   : 1
+        flex-shrink : 1
+
+    // カラムコンテンツ
+    div[data-name$=-column],
+    div[data-name$=-column-2]
+
+        // テキスト
+        [data-layout="text-layout"]
+            [data-type="wysiwyg"]
+                padding : 0
+                div.acf-label
+                    display : none
+                .wp-editor-container
+                    border-top    : none
+                    border-left   : none
+                    border-bottom : none
+
+        // 区切り
+        [data-layout="hr-layout"]
+            div[data-name="collapse-layout"]
+                border-bottom : none
+            .acf-icon.-collapse.acf-js-tooltip
+                display : none
+            .acf-fields.-left
+                display : none
+
+        // 見出し
+        [data-layout="header-layout"]
+            [data-name="header"]
+                .acf-label
+                    display : none
+
+        // 画像
+        [data-layout="img-layout"]
+            [data-name="img"]
+                .acf-label
+                    display : none
+            [data-name="title"]
+                .acf-label
+                    display : none
+            [data-name="alt"]
+                .acf-label
+                    display : none
+
+        // 画像ギャラリー
+        [data-layout="gallery-layout"]
+            div.acf-field-gallery
+                padding : 0
+                .acf-label
+                    display : none
+                .acf-input .acf-gallery
+                    border : none
+
+        // リンクボタン
+        [data-layout="link-btn-layout"]
+            *[data-name="url"] div.acf-label
+                display : none
+            *[data-name="text"] div.acf-label
+                display : none
+
+
+body.post-type-book-post
+    // キャッチ
+    *[data-name="catch"] .acf-label
+        display : none
+    // 発行(社)
+    *[data-name="publication-grp"]
+        // テキスト
+        *[data-name="text"] .acf-label
+            display : none
+        // URL
+        *[data-name="url"] .acf-label
+            display : none
+    // 著者
+    *[data-name="author-grp"]
+        // 著者
+        *[data-name="author"] .acf-label
+            display : none
+        // 著者補足
+        *[data-name="codicil"] .acf-label
+            display : none
+    // ページ数と価格
+    *[data-name="page-num_and_price"]
+        // ページ数
+        *[data-name="page-num"] .acf-label
+            display : none
+        // ページ補足
+        *[data-name="codicil"] .acf-label
+            display : none
+        // 価格
+        *[data-name="price"] .acf-label
+            display : none
+    // 詳細へのリンク
+    *[data-name="link-grp"]
+        // テキスト
+        *[data-name="text"] .acf-label
+            display : none
+        // URL
+        *[data-name="url"] .acf-label
+            display : none
+    // 説明文
+    *[data-name="description"] .acf-label
+        display : none

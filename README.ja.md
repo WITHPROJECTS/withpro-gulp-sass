@@ -1,10 +1,15 @@
 Gulpを使ったSassの開発環境です。  
 
-# 出来ること
+| engines | version |
+|---------|---------|
+| node.js | ^8.9.3  |
+| npm     | ^5.6.0  |
 
-- Sass, Scssファイルの監視とビルド
-- 画像の幅取得、高さ取得、パスの取得
-- iconfontの生成
+以下のことが出来ます
+
+- Sassファイル(.s[ac]ss)の監視とビルド
+- 画像の幅、高さ、パスを取得するSass関数の提供
+- アイコンフォントの生成
 
 # インストール
 
@@ -14,152 +19,132 @@ $ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
 
 # 使い方
 
+「gulpfile.js」に入力ファイルと出力ファイルの設定を記述します。
+
+```js
+let task = require('withpro-gulp-sass');
+
+task
+    /**
+     * 入力パスの設定
+     * task.setPath( 'input', path={} );
+     *
+     * @arg    {string}        inout
+     * @arg    {Object}        [path={}]
+     * @arg    {string}        [path.root=__dirname] 出力ファイル群のルートディレクトリパス
+     * @arg    {string}        [path.sass='']        Sassファイルが入っているディレクトリのパス path.rootからの相対パス
+     * @arg    {string}        [path.font='']        フォントファイルが入っているディレクトリのパス path.rootからの相対パス
+     * @arg    {Array<string>} [path.lib=['']]       node-sassのincludePaths path.rootからの相対パス
+     * @return {TaskAssist}
+     */
+    .setPath( 'input', {
+        'root' : `${__dirname}/src`,
+        'sass' : 'sass',
+        'font' : 'font',
+        'lib'  : ['../lib/sass']
+    } )
+    /**
+     * 出力パスの設定
+     * task.setPath( 'output', path={} );
+     *
+     * @arg    {string}     inout
+     * @arg    {Object}     [path={}]
+     * @arg    {string}     [path.root=__dirname] 出力ファイル群のルートディレクトリパス
+     * @arg    {string}     [path.css='']         CSSファイルを出力するディレクトリのパス path.rootからの相対パス
+     * @arg    {string}     [path.font='']        フォントファイルを出力するディレクトリのパス path.rootからの相対パス
+     * @arg    {string}     [path.image='']       画像ファイルが入っているディレクトリのパス path.rootからの相対パス
+     * @return {TaskAssist}
+     */
+    // 
+    .setPath( 'output', {
+        'root'  : `${__dirname}/src`,
+        'css'   : 'css',
+        'font'  : 'font',
+        'image' : 'img'
+    } );
+```
+
+## 実行
+
+```bash
+# Sassファイルの監視
+$ npm run watch:sass
+```
+
+```bash
+# Sassファイルのコンパイル
+$ npm run build:sass
+```
+
+```bash
+# アイコンフォントの作成
+$ npm run iconfont
+```
+
+# 設定変更
+
+setOption関数を使うことでタスクの挙動を変更することが出来ます。
+
 ```js
 // gulpfile.js
 let task = require('withpro-gulp-sass');
 
 /**
- * 入力パスの設定
- * task.setPath( 'input', path={} );
- * 
- * @param {string}        [path.root=__dirname] 入力ファイル群のルートディレクトリパス
- * @param {string}        [path.sass='']        Sassファイルが入ったディレクトリのパス path.rootからの相対パス
- * @param {string}        [path.font='']        フォントファイルが入ったディレクトリのパス path.fontからの相対パス
- * @param {Array<string>} [path.lib=['']]       SassオプションincludePaths
+ * オプションをセットする
+ * @arg    {string}     name        設定名
+ * @arg    {Object}     option      設定する値
+ * @arg    {boolean}    [diff=true] true：差分　false：差し替え
+ * @return {TaskAssist}
  */
-task.setPath('input', {
-    'root' : `${__dirname}/src`,
-    'sass' : 'sass',
-    'font' : 'font',
-    'lib'  : ['../lib/sass']
-});
-
-/**
- * 出力パスの設定
- * task.setPath( 'output', path={} );
- *
- * @param {string} [path.root=__dirname] 出力ファイル群のルートディレクトリパス
- * @param {string} [path.css='']         CSSファイルを出力するディレクトリのパス path.rootからの相対パス
- * @param {string} [path.font='']        フォントファイルを出力するディレクトリのパス path.rootからの相対パス
- * @param {string} [path.image='']       画像ファイルが入っているディレクトリのパス path.rootからの相対パス
- */
-// 
-task.setPath('output', {
-    'root'  : `${__dirname}/src`, // 入力ファイル群のルートディレクトリパス
-    'css'   : 'css', //  (オプション：デフォルトは空文字)
-    'font'  : 'font', // 
-    'image' : 'img', // 
-});
+task.setOption( 'sass', {} );
 ```
 
+設定名(name)は以下のパッケージを指します。
 
+| name     | package                                                      |
+|----------|--------------------------------------------------------------|
+| sass     | [gulp-sass](https://www.npmjs.com/package/gulp-sass)         |
+| pleeease | [gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease) |
+| plumber  | [gulp-plumber](https://www.npmjs.com/package/gulp-plumber)   |
 
-## 監視
-```bash
-$ gulp sass-watch
-```
+## gulp-sass
 
-## ビルド
+パッケージ標準の設定項目の他に以下の項目を設定できます。
 
-```bash
-$ gulp sass-build
-```
+### enqueueFunctions
 
-## iconfont
+functionsを動的に追加します。  
+enqueueFunctionsに登録された関数はSassコンパイル前に実行されfunctionsに登録されます。
 
-```bash
-$ gulp iconfont
-```
-
-# 設定変更
-
-出力先の変更などは以下の様にします。
+プロパティ「this」を省略した場合はfuncのthisがTaskAssistになります。
 
 ```js
-// gulpfile.js
-let gulp = require('gulp');
-let conf = require('./withpro-gulp-sass');
-
-conf : {
-    'path' : {
-        'project' : '/',
-        'src' : {
-            'sass'      : 'src/sass',
-            'sassMixin' : 'src/sass/mixin',
-            'font'      : 'src/font',
-            'iconfont'  : 'src/font/icon',
-            'lib'       : ['src/sass']
-        },
-        'dest' : {
-            'css'      : 'build/css',
-            'image'    : 'build/img',
-            'font'     : 'build/font',
-            'iconfont' : 'build/font/icon'
+/**
+ * @prop {Object}   enqueueFunctions
+ * @prop {Object}   enqueueFunctions.xxx                  key/valueの形でSassのカスタム関数を定義する。
+ * @prop {function} enqueueFunctions.xxx.func             Sassコンパイル処理時に実行され、返り値をfunctionsとして登録する
+ * @prop {boolean}  [enqueueFunctions.xxx.this=undefined] funcを拘束するthis 省略した場合はTaskAssistのインスタンスがthisになる
+ */
+task.setOption( 'sass', {
+    'enqueueFunctions' : {
+        'myFunction' : {
+            'func' : function(){
+                ...
+                return {
+                    'double' : function(){...},
+                    'add'    : function(){...},
+                }
+            },
+            'this' : self
         }
-    },
-    'browsers' : ['last 3 version'] // gulp-pleeeease support level.
-}
-
-conf.init();
+    }
+} );
 ```
 
-設定の変更は必ず"**init()**"の前に行ってください。
+## gulp-plumber
 
-## conf.path
+パッケージ標準の設定項目の他に以下の項目を設定できます。
 
-| プロパティ    | 型            | 初期値          |
-|---------------|---------------|-----------------|
-| project       | String        | /               |
-| src.sass      | String        | src/sass        |
-| src.sassMixin | String        | src/sass/mixin  |
-| src.font      | String        | src/font        |
-| src.iconfont  | String        | src/font/icon   |
-| src.lib       | String<Array> | [src/sass]      |
-| dest.css      | String        | build/css       |
-| dest.image    | String        | build/img       |
-| dest.font     | String        | build/font      |
-| dest.iconfont | String        | build/font/icon |
+### sound
 
-## conf.options 
-
-options オブジェクトにはタスクのオプションを渡すことができます。
-
-### conf.options.sass
-
-[gulp-sass](https://www.npmjs.com/package/gulp-sass)のオプション  
-以下のオプションがデフォルトで設定されています。
-
-| プロパティ   | 初期値            |
-|--------------|-------------------|
-| outputStyle  | compressed        |
-| includePaths | conf.path.src.lib |
-| functions    | sassImageHelper() |
-
-### conf.options.pleeease
-
-[gulp-pleeease](https://www.npmjs.com/package/gulp-pleeease)のオプション  
-以下のオプションがデフォルトで設定されています。
-
-| プロパティ            | 初期値        |
-|-----------------------|---------------|
-| minifier              | false         |
-| rem                   | true          |
-| opacity               | true          |
-| autoprefixer          | Object        |
-| autoprefixer.browsers | conf.browsers |
-| autoprefixer.cascade  | conf.browsers |
-
-### conf.options.iconfont
-
-[gulp-iconfont](https://www.npmjs.com/package/gulp-iconfont)のオプション  
-以下のオプションがデフォルトで設定されています。
-
-| プロパティ         | 初期値                 |
-|--------------------|------------------------|
-| formats            | ['ttf', 'eot', 'woff'] |
-| descent            | 0                      |
-| prependUnicode     | true                   |
-| autohint           | false                  |
-| fixedWidth         | false                  |
-| centerHorizontally | false                  |
-| normalize          | true                   |
+通知時のサウンドを変更します。  

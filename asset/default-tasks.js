@@ -1,26 +1,23 @@
-const path     = require('path');
-const gulp     = require('gulp');
-const sass     = require('gulp-sass');
-const grapher  = require('sass-graph');
-const plumber  = require('gulp-plumber');
-const pleeease = require('gulp-pleeease');
-let sassTypes  = require('node-sass').types;
+const path        = require('path');
+const gulp        = require('gulp');          //
+const sass        = require('gulp-sass');     // Sass
+const plumber     = require('gulp-plumber');  // 
+const pleeease    = require('gulp-pleeease'); // 
+const cached      = require('gulp-cached');   // キャッシュ
+const gulpIf      = require('gulp-if');       // if文
+const gulpForEach = require('gulp-foreach');  // forEach文
+const grapher     = require('sass-graph');    // 
+
 let graph      = null;
-
 let taskStatus = require(`${__dirname}/task-status`);
-console.log(taskStatus.mainTaskID);
-// let test = require('./task-status');
-// test = require('./task-status');
-
-
-
-let tasks = {};
+let tasks      = {};
 
 // =============================================================================
 // Sassのコンパイル
 // 
-tasks['sass-build'] = {
+tasks['build:sass'] = {
     'task' : function( done ){
+        taskStatus.mainTaskID = 'build:sass';
 
         let _root  = this.getPath( 'input', 'sass' );
         let target = path.join( _root, `**/*.${this.ext.sass}`);
@@ -42,27 +39,60 @@ tasks['sass-build'] = {
         }
 
         gulp.src(target)
-            .pipe(plumber(ops.plumber))
-            .pipe(sass.sync(ops.sass))
-            .pipe(pleeease(ops.pleeease))
-            .pipe(plumber.stop())
-            .pipe(gulp.dest(dest));
+            .pipe( plumber( ops.plumber ) )
+            .pipe( gulpIf( taskStatus.isWatching, cached('sass') ) )
+            .pipe( gulpIf(
+                taskStatus.isWatching,
+                gulpForEach (
+                    ( currentStream, file )=>{
+                        let files     = [file.path];
+                        let addParent = function ( childPath ) {
+                            // visits all files that are descendents of the provided file
+                            graph.visitAncestors( childPath, function ( parent ) {
+                                if ( files.indexOf(parent) === -1 ) files.push(parent);
+                                addParent(parent);
+                            });
+                        }
+                        addParent(file.path);
+                        return gulp.src( files, { base : this.getPath( 'input', 'sass' ) } );
+                    }
+                )
+            ) )
+            .pipe( sass.sync( ops.sass ) )
+            .pipe( pleeease( ops.pleeease ) )
+            .pipe( plumber.stop() )
+            .pipe( gulp.dest( dest ) )
+            .on('end', done);
 
-        done();
     }
 }
 
 // =============================================================================
 // Sassファイルの監視
 // 
-tasks['sass-watch'] = {
+tasks['watch:sass'] = {
     'task' : function ( done ) {
-        taskStatus.mainTaskID = 'sass-watch';
-        let target = path.join( this.getPath( 'input', 'sass' ), `**/*.${this.ext.sass}`);
-        gulp.watch( target, gulp.series('sass-build') );
+        taskStatus.mainTaskID = 'watch:sass';
+        taskStatus.isWatching = true;
+        graph = grapher.parseDir( this.getPath( 'input', 'sass' ), {
+            extensions : ['sass', 'scss']
+        });
+        
+        let target = path.join( this.getPath( 'input', 'sass' ), `**/*.${this.ext.sass}` );
+        gulp.watch( target, gulp.series('build:sass') );
         done();
     }
 }
 
+// =============================================================================
+// アイコンフォント作成
+// 
+tasks['iconfont'] = {
+    'task' : function ( done ) {
+        taskStatus.mainTaskID = 'iconfont';
+        
+        done();
+    }
+}
 
 module.exports = tasks;

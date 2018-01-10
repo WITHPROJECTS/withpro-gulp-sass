@@ -4,6 +4,7 @@ let task = require( path.join( __dirname, 'withpro-gulp-sass' ) );
 task
     .setPath( 'input', {
         'root' : `${__dirname}/src`,
+        'lib'  : ['../lib/sass'],
         'sass' : 'sass',
         'font' : 'font'
     })

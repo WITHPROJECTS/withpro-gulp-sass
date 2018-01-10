@@ -1,0 +1,48 @@
+.m__line-list
+    font-size : $base-font-size-s
+    // display         : flex
+    // flex-direction  : row
+    // flex-wrap       : wrap
+    // justify-content : space-between
+    // width           : 100%
+    // margin-top      : -2em
+    border-top : 1px solid $link-color
+    // アイテム
+    > li
+        border-bottom : 1px solid $link-color
+        padding       : 1em $margin-small-s
+        ul.top
+            display     : block
+            line-height : 1
+            font-family : $mincho-sp
+            font-size   : 12px
+            font-weight : bold
+            .date time
+                color : $link-color
+                span.d__color--red
+                    font-weight : normal
+            .author
+                padding-top : 0.3em
+                a
+                    color : $link-color
+        a.cnt
+            display : block
+            header
+                margin-top : 0.6em
+                // キャッチ
+                .catch
+                    line-height           : 1.35
+                    font-feature-settings : 'palt'
+                    margin-bottom         : 0.1em
+                    font-size             : 12px
+                // タイトル
+                .title
+                    font-family           : $mincho
+                    font-size             : 18px
+                    line-height           : 1.3
+                    font-feature-settings : 'palt'
+                    font-weight           : bold
+            .excerpt
+                margin-top : 0
+                p
+                    line-height : 1.5
