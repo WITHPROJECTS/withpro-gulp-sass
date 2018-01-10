@@ -13,7 +13,7 @@ it is able to
 # Install
 
 ```
-$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
+$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git\#v1
 ```
 
 # How to use
