@@ -14,7 +14,7 @@ Gulpを使ったSassの開発環境です。
 # インストール
 
 ```
-$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git
+$ npm i git+ssh://git@github.com:WITHPROJECTS/withpro-gulp-sass.git\#v1
 ```
 
 # 使い方
