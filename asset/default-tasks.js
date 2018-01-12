@@ -4,8 +4,9 @@ const sass        = require('gulp-sass');     // Sass
 const plumber     = require('gulp-plumber');  // 
 const pleeease    = require('gulp-pleeease'); // 
 const cached      = require('gulp-cached');   // キャッシュ
-const gulpIf      = require('gulp-if');       // if文
-const gulpForEach = require('gulp-foreach');  // forEach文
+const _if         = require('gulp-if');       // if文
+const flatmap     = require('gulp-flatmap');  // 
+// const gulpForEach = require('gulp-foreach');  // forEach文
 const grapher     = require('sass-graph');    // 
 
 let graph = null;
@@ -40,10 +41,10 @@ tasks['build:sass'] = {
 
         gulp.src(target)
             .pipe( plumber( ops.plumber ) )
-            .pipe( gulpIf( status.isWatching, cached('sass') ) )
-            .pipe( gulpIf(
+            .pipe( _if( status.isWatching, cached('sass') ) )
+            .pipe( _if(
                 status.isWatching,
-                gulpForEach (
+                flatmap (
                     ( currentStream, file )=>{
                         let files     = [file.path];
                         let addParent = function ( childPath ) {
